@@ -1,0 +1,41 @@
+
+{
+	"ui":{
+		"encoding":"gbk",
+		"fontName":"微软雅黑",
+		"textLicense":"许可协议",
+		"textCancleInstall":"",
+		"textCancleInstallMsgbox":"确定取消安装吗？",
+		"textAgreeLicense":"已经阅读,并同意",
+		"textCreateShortcut":"创建桌面快捷方式",
+		"textStartupOnBootstrap":"开机启动",
+		"textStartupOnFinish":"安装完成后,立即运行程序",
+		
+		"showLicense":true,
+		"showAgreeLicense":true,
+		"showCreateShortcut":true,
+		"showStartupOnFinish":true,
+		"showStartupOnBootstrap":true,
+		"showInstallPath":true
+	},
+	
+	"installDetail": {
+		"createShortcut":true,
+		"startupOnFinish":true,
+		"startupOnBootstrap":true,
+		"agreeLicense":true,
+		"installPath":"",
+		"defaultInstallDir":"{pf}",
+		"installerOutputDir":"."
+	},
+	"app":{
+		"id":"myapp_id",
+		"name":"myapp",
+		"version":"1.0.0",
+		"publisher":"htgk",
+		"url":"",
+		"comments":"myapp_installer",
+		"exe":"1234",
+		"package":"app\\*"
+	}
+}

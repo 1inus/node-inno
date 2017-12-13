@@ -1,0 +1,28 @@
+{
+	"compileOnSave": true,
+	"compilerOptions": {
+		"module": "UMD",
+		"noImplicitAny": true,
+		"removeComments": true,
+		"target": "es6",
+		"preserveConstEnums": true,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"sourceMap": false
+	},
+	"lib": [
+		"es2017"
+	],
+	"include": [
+		"src/**/*"
+	],
+	"types": [
+		"node"
+	],
+	"typeRoots": [
+		"node_modules/@types"
+	],
+	"exclude": [
+		"node_modules"
+	]
+}

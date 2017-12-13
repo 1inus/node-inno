@@ -1,0 +1,117 @@
+#include "includes\config.iss";
+
+[Code]
+#include "includes\const.iss";
+var
+	installStep : Longint;
+	progressPanel: TPanel; //主要面板
+	
+	io : integer;
+
+	//百分比
+	PBOldProc : Longint;
+	
+#include "includes\common.iss";
+#include "includes\resetMainWindow.iss";
+#include "includes\installDetail.iss";
+#include "includes\installProgressBar.iss";
+#include "includes\installFinish.iss";
+
+//百分比
+function PBProc(h:hWnd; Msg, wParam, lParam:Longint):Longint;
+var
+	pr,i1,i2 : Extended;
+begin
+	Result:=CallWindowProc(PBOldProc, h, Msg, wParam, lParam);
+	if (Msg=$402) and (WizardForm.ProgressGauge.Position>WizardForm.ProgressGauge.Min) then begin
+		i1:=WizardForm.ProgressGauge.Position-WizardForm.ProgressGauge.Min;
+		i2:=WizardForm.ProgressGauge.Max-WizardForm.ProgressGauge.Min;
+		pr:=i1*100/i2;
+		setProgressWidth(Round(pr));
+	end;
+end;
+
+
+//向导调用这个事件函数确定是否在所有页或不在一个特殊页 (用 PageID 指定) 显示。如果返回 True，将跳过该页；如果你返回 False，该页被显示。inno
+//注意: 这个事件函数不被 wpPreparing 和 wpInstalling 页调用，还有安装程序已经确定要跳过的页也不会调用 (例如，没有包含组件安装程序的 wpSelectComponents)。inno
+function ShouldSkipPage(PageID: Integer): Boolean;
+begin
+	if PageID=wpSelectComponents then    //跳过组件安装界面
+		result := true;
+
+	if PageID=wpWelcome then
+		result := true;
+
+	if PageID=wpSelectDir then
+		result := true;
+end;
+
+//在安装程序初始化时调用，返回 False 中断安装，返回 True 反之。inno
+function InitializeSetup: Boolean;
+begin
+	//if RegQueryStringValue(HKLM, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{#appName}_is1', 'UninstallString', ResultStr) then begin
+		//if msgbox('检测到旧版本，点击"确定"将自动卸载旧版本，点击"取消"退出安装', mbInformation, MB_OKCANCEL) = idok then begin
+			//ResultStr := RemoveQuotes(ResultStr);
+			//Exec(ResultStr, '/VERYSILENT', '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode);
+			//Result := true;
+		//end else begin
+			//Result := False;
+		//end
+	//end else begin
+		Result := true;
+	//end
+end;
+
+//使用这个事件函数启动时改变向导或向导页。你不能在它触发之后使用 InitializeSetup 事件函数，向导窗体不退出
+procedure InitializeWizard();
+begin
+	ExtractTmpFiles;
+	resetMainWindow(win_width, win_height);
+	initDetailPanel;
+	createProgressPanel(0, 250, win_width, 150);
+	createFinishPanel(0, 250, 240, 60);
+	installStep := wpWelcome;
+	PBOldProc:=SetWindowLong(WizardForm.ProgressGauge.Handle,-4,PBCallBack(@PBProc,4));
+	detailPanel.show;
+	hideProgressPanel;
+end;
+
+//在这里是正在安装页面
+//在新向导页 (用 CurPageID 指定) 显示后调用。inno
+procedure CurPageChanged(CurPageID: Integer);
+var RCode: Integer;
+begin
+	//ImgRelease(mainBg);
+	//mainBg:=ImgLoad(WizardForm.Handle, ExpandConstant('{tmp}\bg.png'), 0, 0, 434, 384, True, True);
+
+	//正在安装
+	if CurPageID = wpInstalling then begin
+		installStep := wpInstalling;
+		detailPanel.hide;
+		setEnableCloseBtn(true);
+		//显示安装中页面
+		showProgressPanel;
+	end else if CurPageID = wpFinished then begin //安装完毕（直接跳过安装）
+		installStep := wpFinished;
+		setEnableCloseBtn(true);
+		hideProgressPanel;
+		showFinishedPanel;
+		if BtnGetChecked(startupOnFinishBtn) = true then begin
+			Exec(ExpandConstant('{app}\{#appName}' + '.exe'), '', '', SW_SHOW, ewNoWait, RCode);
+			WizardForm.NextButton.Click;
+		end else begin
+			showFinishedPanel;
+		end;
+	end;
+
+	//如果没有它就显示不了图像
+	ImgApplyChanges(WizardForm.Handle);
+end;
+
+//仅在安装程序终止前调用。注意这个函数在即使用户在任何内容安装之前退出安装程序时也会调用。inno
+procedure DeinitializeSetup();
+begin
+	gdipShutdown;  //背景图
+	if PBOldProc<>0 then SetWindowLong(WizardForm.ProgressGauge.Handle,-4,PBOldProc);
+end;
+
