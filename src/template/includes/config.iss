@@ -21,15 +21,15 @@ AppPublisherURL			= {#appURL}
 AppSupportURL			= {#appURL}
 AppUpdatesURL			= {#appURL}
 
-//安装路劲
+//install dir
 DefaultDirName			= {pf}\{#appName}
 DefaultGroupName		= {#appName}
 
-//编译输出路径
+//output dir
 OutPutDir				= "{{installDetail.installerOutputDir}}"
 OutputBaseFilename		= "{#appName}-{#appVersion}"
 
-//压缩
+// compress
 Compression				= lzma2/ultra64
 SolidCompression		= yes
 
@@ -37,7 +37,8 @@ AllowNoIcons			= yes
 DisableReadyPage		= yes
 DisableProgramGroupPage	= yes
 
-SetupIconFile			= "inno-resource\installer.ico"
+SetupIconFile			= "inno-resource\install.ico"
+UninstallDisplayIcon	= "inno-resource\uninstall.ico"
 
 //use preview
 UsePreviousAppDir		= yes
@@ -51,18 +52,17 @@ UsePreviousUserInfo		= yes
 Name: "startupicon"; Description: "{#appName} startupOnBootstrap"; GroupDescription: "{cm:AdditionalIcons}";
 
 [Icons]
-Name: "{userstartup}\{#appName}"; 						Filename: "{app}\{#appName}"; 		IconFilename: "{app}\icon.ico"; Tasks: startupicon
-Name: "{group}\{#appName}"; 							Filename: "{app}\{#appName}.exe";	WorkingDir: "{app}";
-Name: "{userdesktop}\{#appName}";						Filename: "{app}\{#appName}.exe"; 	IconFilename: "{app}\icon.ico"; Check: DesktopCheckClick;
-Name: "{group}\{cm:UninstallProgram,{#appName}}"; 		Filename: "{uninstallexe}";			WorkingDir: {app};
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#appName}"; Filename: "{app}\{#appName}.exe"; WorkingDir: {app};
+Name: "{group}\{#appName}"; Filename: "{app}\{#appName}.exe"; WorkingDir: "{app}";
+Name: "{group}\{cm:UninstallProgram,{#appName}}"; Filename: "{uninstallexe}"; WorkingDir: "{app}";
+Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#appName}"; Filename: "{app}\{#appName}.exe"; WorkingDir: "{app}";
+
+Name: "{userdesktop}\{#appName}"; Filename: "{app}\{#appName}.exe"; Check: DesktopCheckClick;
 
 [Registry] 
-Root: HKLM; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\Run"; ValueType: string; ValueName: "testrun"; ValueData: "{app}\{#appName}"
+Root: HKLM; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\Run"; ValueType:string; ValueName:"{#appName}"; ValueData: "{app}\{#appName}"
 
 [Files]
-Source: "inno-resource\*"; 		DestDir: {tmp}; Flags: dontcopy solidbreak; 
+Source: "inno-resource\*"; 	DestDir: {tmp}; Flags: dontcopy solidbreak; 
 Source: "plugin\*.dll";  	DestDir: {app}; Flags: dontcopy solidbreak;
 
-//打包文件
 Source: "{{app.package}}";  DestDir: {app}; Flags: recursesubdirs;

@@ -5,7 +5,7 @@ var
 
 procedure createProgressPanel(panelLeft, panelTop, panelWidth, panelHeight:Longint);
 begin
-	//安装细节选择面板
+	//installation details selection panel
 	progressPanel := TPanel.Create(WizardForm);
 	with progressPanel do begin
 		Parent := WizardForm;
@@ -20,7 +20,7 @@ begin
 		hide;
 	end;
 	
-	//进度条
+	//progress bar
 	pbarLeft := 100;
 	pbarWidth:=win_width-pbarLeft*2;
 	pbarHeight:=20;
@@ -64,7 +64,7 @@ begin
 	ImgSetVisibility(progressBarBg, false);
 end;
 
-//百分比
+//percentage
 procedure setProgressWidth(progressWidth:Longint);
 begin
 	progressLabel.Caption:=IntToStr(progressWidth)+'%';

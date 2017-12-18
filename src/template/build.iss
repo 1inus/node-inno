@@ -4,11 +4,11 @@
 #include "includes\const.iss";
 var
 	installStep : Longint;
-	progressPanel: TPanel; //Ö÷ÒªÃæ°å
+	progressPanel: TPanel; //ä¸»è¦é¢æ¿
 	
 	io : integer;
 
-	//°Ù·Ö±È
+	//ç™¾åˆ†æ¯”
 	PBOldProc : Longint;
 	
 #include "includes\common.iss";
@@ -17,7 +17,7 @@ var
 #include "includes\installProgressBar.iss";
 #include "includes\installFinish.iss";
 
-//°Ù·Ö±È
+//ç™¾åˆ†æ¯”
 function PBProc(h:hWnd; Msg, wParam, lParam:Longint):Longint;
 var
 	pr,i1,i2 : Extended;
@@ -32,11 +32,11 @@ begin
 end;
 
 
-//Ïòµ¼µ÷ÓÃÕâ¸öÊÂ¼şº¯ÊıÈ·¶¨ÊÇ·ñÔÚËùÓĞÒ³»ò²»ÔÚÒ»¸öÌØÊâÒ³ (ÓÃ PageID Ö¸¶¨) ÏÔÊ¾¡£Èç¹û·µ»Ø True£¬½«Ìø¹ı¸ÃÒ³£»Èç¹ûÄã·µ»Ø False£¬¸ÃÒ³±»ÏÔÊ¾¡£inno
-//×¢Òâ: Õâ¸öÊÂ¼şº¯Êı²»±» wpPreparing ºÍ wpInstalling Ò³µ÷ÓÃ£¬»¹ÓĞ°²×°³ÌĞòÒÑ¾­È·¶¨ÒªÌø¹ıµÄÒ³Ò²²»»áµ÷ÓÃ (ÀıÈç£¬Ã»ÓĞ°üº¬×é¼ş°²×°³ÌĞòµÄ wpSelectComponents)¡£inno
+//å‘å¯¼è°ƒç”¨è¿™ä¸ªäº‹ä»¶å‡½æ•°ç¡®å®šæ˜¯å¦åœ¨æ‰€æœ‰é¡µæˆ–ä¸åœ¨ä¸€ä¸ªç‰¹æ®Šé¡µ (ç”¨ PageID æŒ‡å®š) æ˜¾ç¤ºã€‚å¦‚æœè¿”å› Trueï¼Œå°†è·³è¿‡è¯¥é¡µï¼›å¦‚æœä½ è¿”å› Falseï¼Œè¯¥é¡µè¢«æ˜¾ç¤ºã€‚inno
+//æ³¨æ„: è¿™ä¸ªäº‹ä»¶å‡½æ•°ä¸è¢« wpPreparing å’Œ wpInstalling é¡µè°ƒç”¨ï¼Œè¿˜æœ‰å®‰è£…ç¨‹åºå·²ç»ç¡®å®šè¦è·³è¿‡çš„é¡µä¹Ÿä¸ä¼šè°ƒç”¨ (ä¾‹å¦‚ï¼Œæ²¡æœ‰åŒ…å«ç»„ä»¶å®‰è£…ç¨‹åºçš„ wpSelectComponents)ã€‚inno
 function ShouldSkipPage(PageID: Integer): Boolean;
 begin
-	if PageID=wpSelectComponents then    //Ìø¹ı×é¼ş°²×°½çÃæ
+	if PageID=wpSelectComponents then    //è·³è¿‡ç»„ä»¶å®‰è£…ç•Œé¢
 		result := true;
 
 	if PageID=wpWelcome then
@@ -46,23 +46,7 @@ begin
 		result := true;
 end;
 
-//ÔÚ°²×°³ÌĞò³õÊ¼»¯Ê±µ÷ÓÃ£¬·µ»Ø False ÖĞ¶Ï°²×°£¬·µ»Ø True ·´Ö®¡£inno
-function InitializeSetup: Boolean;
-begin
-	//if RegQueryStringValue(HKLM, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{#appName}_is1', 'UninstallString', ResultStr) then begin
-		//if msgbox('¼ì²âµ½¾É°æ±¾£¬µã»÷"È·¶¨"½«×Ô¶¯Ğ¶ÔØ¾É°æ±¾£¬µã»÷"È¡Ïû"ÍË³ö°²×°', mbInformation, MB_OKCANCEL) = idok then begin
-			//ResultStr := RemoveQuotes(ResultStr);
-			//Exec(ResultStr, '/VERYSILENT', '', SW_SHOWNORMAL, ewWaitUntilTerminated, ResultCode);
-			//Result := true;
-		//end else begin
-			//Result := False;
-		//end
-	//end else begin
-		Result := true;
-	//end
-end;
-
-//Ê¹ÓÃÕâ¸öÊÂ¼şº¯ÊıÆô¶¯Ê±¸Ä±äÏòµ¼»òÏòµ¼Ò³¡£Äã²»ÄÜÔÚËü´¥·¢Ö®ºóÊ¹ÓÃ InitializeSetup ÊÂ¼şº¯Êı£¬Ïòµ¼´°Ìå²»ÍË³ö
+//ä½¿ç”¨è¿™ä¸ªäº‹ä»¶å‡½æ•°å¯åŠ¨æ—¶æ”¹å˜å‘å¯¼æˆ–å‘å¯¼é¡µã€‚ä½ ä¸èƒ½åœ¨å®ƒè§¦å‘ä¹‹åä½¿ç”¨ InitializeSetup äº‹ä»¶å‡½æ•°ï¼Œå‘å¯¼çª—ä½“ä¸é€€å‡º
 procedure InitializeWizard();
 begin
 	ExtractTmpFiles;
@@ -76,22 +60,22 @@ begin
 	hideProgressPanel;
 end;
 
-//ÔÚÕâÀïÊÇÕıÔÚ°²×°Ò³Ãæ
-//ÔÚĞÂÏòµ¼Ò³ (ÓÃ CurPageID Ö¸¶¨) ÏÔÊ¾ºóµ÷ÓÃ¡£inno
+//åœ¨è¿™é‡Œæ˜¯æ­£åœ¨å®‰è£…é¡µé¢
+//åœ¨æ–°å‘å¯¼é¡µ (ç”¨ CurPageID æŒ‡å®š) æ˜¾ç¤ºåè°ƒç”¨ã€‚inno
 procedure CurPageChanged(CurPageID: Integer);
 var RCode: Integer;
 begin
 	//ImgRelease(mainBg);
 	//mainBg:=ImgLoad(WizardForm.Handle, ExpandConstant('{tmp}\bg.png'), 0, 0, 434, 384, True, True);
 
-	//ÕıÔÚ°²×°
+	//æ­£åœ¨å®‰è£…
 	if CurPageID = wpInstalling then begin
 		installStep := wpInstalling;
 		detailPanel.hide;
 		setEnableCloseBtn(true);
-		//ÏÔÊ¾°²×°ÖĞÒ³Ãæ
+		//æ˜¾ç¤ºå®‰è£…ä¸­é¡µé¢
 		showProgressPanel;
-	end else if CurPageID = wpFinished then begin //°²×°Íê±Ï£¨Ö±½ÓÌø¹ı°²×°£©
+	end else if CurPageID = wpFinished then begin //å®‰è£…å®Œæ¯•ï¼ˆç›´æ¥è·³è¿‡å®‰è£…ï¼‰
 		installStep := wpFinished;
 		setEnableCloseBtn(true);
 		hideProgressPanel;
@@ -104,14 +88,14 @@ begin
 		end;
 	end;
 
-	//Èç¹ûÃ»ÓĞËü¾ÍÏÔÊ¾²»ÁËÍ¼Ïñ
+	//å¦‚æœæ²¡æœ‰å®ƒå°±æ˜¾ç¤ºä¸äº†å›¾åƒ
 	ImgApplyChanges(WizardForm.Handle);
 end;
 
-//½öÔÚ°²×°³ÌĞòÖÕÖ¹Ç°µ÷ÓÃ¡£×¢ÒâÕâ¸öº¯ÊıÔÚ¼´Ê¹ÓÃ»§ÔÚÈÎºÎÄÚÈİ°²×°Ö®Ç°ÍË³ö°²×°³ÌĞòÊ±Ò²»áµ÷ÓÃ¡£inno
+//ä»…åœ¨å®‰è£…ç¨‹åºç»ˆæ­¢å‰è°ƒç”¨ã€‚æ³¨æ„è¿™ä¸ªå‡½æ•°åœ¨å³ä½¿ç”¨æˆ·åœ¨ä»»ä½•å†…å®¹å®‰è£…ä¹‹å‰é€€å‡ºå®‰è£…ç¨‹åºæ—¶ä¹Ÿä¼šè°ƒç”¨ã€‚inno
 procedure DeinitializeSetup();
 begin
-	gdipShutdown;  //±³¾°Í¼
+	gdipShutdown;  //èƒŒæ™¯å›¾
 	if PBOldProc<>0 then SetWindowLong(WizardForm.ProgressGauge.Handle,-4,PBOldProc);
 end;
 

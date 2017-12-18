@@ -16,7 +16,7 @@ begin
 		SetBounds(posiLeft+20, posiTop-2, labelWdith, 14);
 		Transparent:=True;
 		Font.Size := 10;
-		Font.Name := '微软雅黑';
+		Font.Name := fontName;
 		Caption := labelText;
 		Parent := btnParent;
 		Tag := btnId;

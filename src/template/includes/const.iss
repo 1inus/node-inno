@@ -12,15 +12,15 @@ const
 	SM_CYDLGFRAME = 8;
 	WM_SYSCOMMAND = $0112;
 	
-	fontName = 'Microsoft YaHei';
+	fontName = '{{ui.fontName}}';
 	smallFontSize = 10;
 	middleFontSize = 12;
 
-	//按钮
+	//button
 	BtnClickEventID			= 1;
 	BtnMouseEnterEventID	= 2;
 
-	//鼠标指向
+	//cursor
 	MyCursor1 = 101;
 	MyCursor2 = 102;
 

@@ -63,23 +63,51 @@
                 return false;
             }
             let buildTempRoot = path.join(os.homedir(), "Desktop/node-inno");
-            console.log(defaultJson);
-            targetJson = require('extend')(true, defaultJson, targetJson);
+            console.log(this.colorYellow, '\ndefault config :');
+            console.log(this.colorYellow, JSON.stringify(defaultJson, null, 4));
+            targetJson.ui = targetJson.ui || {};
+            targetJson.app = targetJson.app || {};
+            targetJson.installDetail = targetJson.installDetail || {};
             targetJson.app.name = targetJson.app.name || pakage.name;
             targetJson.app.version = targetJson.app.version || pakage.version;
-            targetJson.app.exe = path.join(process.cwd(), targetJson.app.exe);
-            targetJson.installDetail.installerOutputDir = path.join(process.cwd(), targetJson.installDetail.installerOutputDir || `${pakage.name}-${pakage.version}.exe`);
-            targetJson.app.package = path.join(process.cwd(), targetJson.app.package);
-            console.log(targetJson);
-            try {
-                fs.ensureDirSync(buildTempRoot);
-                fs.copySync(path.join(nodeInnoBase, "template/package"), buildTempRoot);
+            if (targetJson.app.exe && targetJson.app.exe.substr(1, 1) == ":") {
+                targetJson.app.exe = path.join('', targetJson.app.exe);
             }
-            catch (e) {
-                console.error(this.colorRed, e);
+            else {
+                targetJson.app.exe = path.join(process.cwd(), targetJson.app.exe);
+            }
+            if (targetJson.app.package && targetJson.app.package.substr(1, 1) == ":") {
+                targetJson.app.package = path.join("", targetJson.app.package);
+            }
+            else {
+                targetJson.app.package = path.join(process.cwd(), targetJson.app.package);
+            }
+            if (targetJson.installDetail.installerOutputDir && targetJson.installDetail.installerOutputDir.substr(1, 1) == ":") {
+                targetJson.installDetail.installerOutputDir = path.join(targetJson.installDetail.installerOutputDir);
+            }
+            else {
+                targetJson.installDetail.installerOutputDir = path.join(process.cwd(), targetJson.installDetail.installerOutputDir || `${pakage.name}-${pakage.version}`);
+            }
+            targetJson.installDetail.defaultInstallDir = targetJson.installDetail.defaultInstallDir || `{pf}`;
+            if (!targetJson.app.exe) {
+                console.error(this.colorRed, `× "${targetJson.app.exe}" required ×`);
                 return false;
             }
-            fs.copySync(path.join(process.cwd(), pakage["node-inno-build"]), buildTempRoot);
+            if (!targetJson.app.package) {
+                console.error(this.colorRed, `× "${targetJson.app.package}" required ×`);
+                return false;
+            }
+            if (!fs.existsSync(targetJson.app.exe)) {
+                console.error(this.colorRed, `× "${targetJson.app.exe}" not exist ×`);
+                return false;
+            }
+            if (!fs.existsSync(targetJson.app.package.replace("*", ""))) {
+                console.error(this.colorRed, `× "${targetJson.app.package}" not exist ×`);
+                return false;
+            }
+            targetJson = require('extend')(true, defaultJson, targetJson);
+            console.log(this.colorYellow, '\n\ntarget config :');
+            console.log(this.colorYellow, JSON.stringify(targetJson, null, 4));
             if (!targetJson.buildScript) {
                 let template = require('art-template');
                 try {
@@ -109,11 +137,31 @@
                         return false;
                     }
                     this.config = targetJson;
+                    let customResource = path.join(process.cwd(), "build/inno-resource");
+                    if (fs.existsSync(customResource)) {
+                        try {
+                            let tempResource = path.join(buildTempRoot, "inno-resource");
+                            fs.copySync(customResource, tempResource);
+                        }
+                        catch (e) {
+                            console.log(e);
+                        }
+                    }
                     return true;
                 }
                 catch (e) {
                     console.error(this.colorRed, e);
                     return false;
+                }
+            }
+            let customResource = path.join(process.cwd(), "build/inno-resource");
+            if (fs.existsSync(customResource)) {
+                try {
+                    let tempResource = path.join(buildTempRoot, "inno-resource");
+                    fs.copySync(customResource, tempResource);
+                }
+                catch (e) {
+                    console.log(e);
                 }
             }
             return true;
@@ -126,10 +174,13 @@
             let innoPath = path.join(__dirname, 'Inno_Setup_5/ISCC.exe');
             let buildProcess = this.spawn(innoPath, [this.config.buildScript]);
             buildProcess.stdout.on('data', (data) => {
+                console.log(this.colorGreen, data);
             });
             buildProcess.stderr.on('data', (data) => {
+                console.log(this.colorRed, data);
             });
             buildProcess.on('close', (code) => {
+                console.log(this.colorGreen, `child process exited with code ${code}`);
             });
             buildProcess.on('exit', (code) => {
                 if (code === 0) {

@@ -1,7 +1,7 @@
 var
 	finishedBtn: Longint;
 
-//安装完启动app
+//瀹夎瀹屽惎鍔╝pp
 procedure RunApp(hBtn:HWND);
 var RCode: Integer;
 begin
@@ -9,7 +9,7 @@ begin
 	WizardForm.NextButton.Click;
 end;
 
-//初始化正在安装中界面
+//鍒濆鍖栨鍦ㄥ畨瑁呬腑鐣岄潰
 procedure createFinishPanel(panelLeft, panelTop, btnWidth, btnHeight:Longint);
 var btnLeft, btnTop:Longint;
 begin
@@ -20,7 +20,7 @@ begin
 	BtnSetVisibility(finishedBtn, false);
 end;
 
-//显示安装完毕页面
+//鏄剧ず瀹夎瀹屾瘯椤甸潰
 procedure showFinishedPanel;
 begin
 	BtnSetVisibility(finishedBtn, true);
