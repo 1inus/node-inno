@@ -2,6 +2,7 @@
 
 [Code]
 #include "includes\const.iss";
+
 var
 	installStep : Longint;
 	progressPanel: TPanel; //主要面板
@@ -10,6 +11,8 @@ var
 
 	//百分比
 	PBOldProc : Longint;
+	
+	currentPage : TNewStaticText;
 	
 #include "includes\common.iss";
 #include "includes\resetMainWindow.iss";
@@ -49,6 +52,18 @@ end;
 //使用这个事件函数启动时改变向导或向导页。你不能在它触发之后使用 InitializeSetup 事件函数，向导窗体不退出
 procedure InitializeWizard();
 begin
+
+	currentPage := TNewStaticText.Create(WizardForm);
+	with currentPage do
+	begin
+		Parent := WizardForm;
+		Caption := '界面1';
+		Left := 10;
+		Top := 10;
+		Width := ScaleX(77);
+		Height := ScaleY(14);
+	end;
+
 	ExtractTmpFiles;
 	resetMainWindow(win_width, win_height);
 	initDetailPanel;
@@ -68,11 +83,15 @@ begin
 	//ImgRelease(mainBg);
 	//mainBg:=ImgLoad(WizardForm.Handle, ExpandConstant('{tmp}\bg.png'), 0, 0, 434, 384, True, True);
 
+
 	//正在安装
 	if CurPageID = wpInstalling then begin
 		installStep := wpInstalling;
 		detailPanel.hide;
 		setEnableCloseBtn(true);
+
+		currentPage.Caption:="InstallingPage";
+
 		//显示安装中页面
 		showProgressPanel;
 	end else if CurPageID = wpFinished then begin //安装完毕（直接跳过安装）

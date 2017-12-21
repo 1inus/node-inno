@@ -19,7 +19,7 @@ begin
 		OnMouseDown := @WizardFormMouseDown;
 		hide;
 	end;
-	
+
 	//progress bar
 	pbarLeft := 100;
 	pbarWidth:=win_width-pbarLeft*2;
@@ -32,7 +32,7 @@ begin
 		AutoSize:=false;
 		Parent:=WizardForm;
 		Left := 0;
-		Top := pbarTop;
+		Top := pbarTop+30;
 		Width := win_width;
 		pbarHeight := 20;
 		Caption:='0%';

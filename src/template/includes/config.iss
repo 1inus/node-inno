@@ -1,12 +1,21 @@
 #include 'WebCtrl.Ish'
 #include '..\plugin\dll.iss'
 
-#define MyAppId "{{app.id}}"
-#define appName "{{app.name}}"
-#define appVersion "{{app.version}}"
-#define appPublisher "{{app.publisher}}"
-#define appURL "{{app.url}}"
-#define MyComments "{{app.comments}}"
+#define appURL 					"{{app.url}}"
+#define MyAppId 				"{{app.id}}"
+#define appName 				"{{app.name}}"
+#define appVersion 				"{{app.version}}"
+#define MyComments 				"{{app.comments}}"
+#define appPublisher 			"{{app.publisher}}"
+
+#define fontName 				"{{ui.fontName}}"
+#define textLicense 			"{{ui.textLicense}}"
+#define textAgreeLicense 		"{{ui.textAgreeLicense}}"
+#define textCancleInstall 		"{{ui.textCancleInstall}}"
+#define textCreateShortcut 		"{{ui.textCreateShortcut}}"
+#define textStartupOnFinish 	"{{ui.textStartupOnFinish}}"
+#define textStartupOnBootstrap 	"{{ui.textStartupOnBootstrap}}"
+#define textCancleInstallMsgbox "{{ui.textCancleInstallMsgbox}}"
 
 [Setup]
 AppName					= {#appName}
@@ -60,6 +69,10 @@ Name: "{userdesktop}\{#appName}"; Filename: "{app}\{#appName}.exe"; Check: Deskt
 
 [Registry] 
 Root: HKLM; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\Run"; ValueType:string; ValueName:"{#appName}"; ValueData: "{app}\{#appName}"
+
+{{each registry as val index}}
+{{if val.root}} Root: {{val.root}};{{/if}} {{if val.subkey}} Subkey: {{val.subkey}};{{/if}} {{if val.type}} ValueType: {{val.type}};{{/if}}{{if val.name}} ValueName: {{val.name}}; {{/if}}{{if val.value}} ValueData: "{{val.value}}"; {{/if}}{{if val.flags}} Flags: {{val.flags}}; {{/if}}
+{{/each}}
 
 [Files]
 Source: "inno-resource\*"; 	DestDir: {tmp}; Flags: dontcopy solidbreak; 

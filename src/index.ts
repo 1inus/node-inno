@@ -72,6 +72,7 @@ export class NodeInno {
 		console.log(this.colorYellow, '\ndefault config :');
 		console.log(this.colorYellow, JSON.stringify(defaultJson, null, 4));
 
+		targetJson.registry = targetJson.registry || [];
 		targetJson.ui = targetJson.ui || {};
 		targetJson.app = targetJson.app || {};
 		targetJson.installDetail = targetJson.installDetail || {};
@@ -121,6 +122,9 @@ export class NodeInno {
 			console.error(this.colorRed, `× "${targetJson.app.package}" not exist ×`);
 			return false;
 		}		
+
+
+		console.log(this.colorYellow, JSON.stringify(targetJson, null, 4));
 
 		targetJson = require('extend')(true, defaultJson, targetJson);
 		/**

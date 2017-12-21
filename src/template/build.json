@@ -1,58 +1,50 @@
-
 {
-	"buildScript":"",
-	"ui":{
-		"encoding":"gbk",
-		"fontName":"Microsoft YaHei",
-		"textLicense":"许可协议",
-		"textMoreOptions":"更多安装选项",
-		"textCancleInstall":"取消安装",
-		"textAgreeLicense":"已经阅读,并同意",
-		"textCreateShortcut":"创建桌面快捷方式",
-		"textStartupOnFinish":"立即运行程序",
-		"textStartupOnBootstrap":"开机启动",
-		"textCancleInstallMsgbox":"确定取消安装吗？",
-		
-		"showLicense":true,
-		"showMoreOptions":true,
-		"showInstallPath":true,
-		"showAgreeLicense":true,
-		"showCreateShortcut":true,
-		"showStartupOnFinish":true,
-		"showStartupOnBootstrap":true
+	"buildScript": "",
+	"ui": {
+		"encoding": "gbk",
+		"fontName": "Microsoft YaHei",
+		"textLicense": "许可协议",
+		"textMoreOptions": "更多安装选项",
+		"textCancleInstall": "取消安装",
+		"textAgreeLicense": "已经阅读,并同意",
+		"textCreateShortcut": "创建桌面快捷方式",
+		"textStartupOnFinish": "立即运行程序",
+		"textStartupOnBootstrap": "开机启动",
+		"textCancleInstallMsgbox": "确定取消安装吗？",
+		"showLicense": true,
+		"showMoreOptions": true,
+		"showInstallPath": true,
+		"showAgreeLicense": true,
+		"showCreateShortcut": true,
+		"showStartupOnFinish": true,
+		"showStartupOnBootstrap": true
 	},
-	
 	"installDetail": {
-		"installPath":"",
-		"agreeLicense":true,
-		"createShortcut":true,
-		"startupOnFinish":true,
-		"installerOutputDir":".",
-		"startupOnBootstrap":true,
-		"defaultInstallDir":"{pf}",
-		"uninstallBeforeInstall":true,
-		"registry" : [{
-			"root": "",
-			"subkey":"",
-			"type":"",
-			"name":"",
-			"value":""
-		}, {
-			"root": "",
-			"subkey":"",
-			"type":"",
-			"name":"",
-			"value":""
-		}]
+		"installPath": "",
+		"agreeLicense": true,
+		"createShortcut": true,
+		"startupOnFinish": true,
+		"installerOutputDir": ".",
+		"startupOnBootstrap": true,
+		"defaultInstallDir": "{pf}",
+		"uninstallBeforeInstall": true
 	},
-	"app":{
-		"id":"myapp_id",
-		"name":"myapp",
-		"version":"1.0.0",
-		"publisher":"htgk",
-		"url":"",
-		"comments":"myapp_installer",
-		"exe":"bulid/app/app.exe",
-		"package":"bulid/app/*"
+	"registry": [{
+		"root": "",
+		"subkey": "",
+		"type": "",
+		"name": "",
+		"value": "",
+		"flags": ""
+	}],
+	"app": {
+		"id": "myapp_id",
+		"name": "myapp",
+		"version": "1.0.0",
+		"publisher": "htgk",
+		"url": "",
+		"comments": "myapp_installer",
+		"exe": "bulid/app/app.exe",
+		"package": "bulid/app/*"
 	}
 }

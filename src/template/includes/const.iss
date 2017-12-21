@@ -27,3 +27,10 @@ const
 	win_Width = 600;
 	win_Height = 400;
 	slidebar_height = 250;
+
+	isShowLicense 			= {{ui.showLicense}};
+	isShowInstallPath 		= {{ui.showInstallPath}};
+	isShowAgreeLicense 		= {{ui.showAgreeLicense}};
+	isShowCreateShortcut 	= {{ui.showCreateShortcut}};
+	isShowStartupOnFinish 	= {{ui.showStartupOnFinish}};
+	isShowStartupOnBootstrap = {{ui.showStartupOnBootstrap}};
