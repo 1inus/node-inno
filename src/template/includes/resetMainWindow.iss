@@ -1,8 +1,13 @@
 var Minimize, CloseBtn: HWND; //close btn
 	mainBg : Longint; //bg image
+	mainFrame : TForm;
 
 procedure resetMainWindow(winWidth:Longint; winHeight:Longint);
 begin
+	mainFrame:=TForm.Create(nil);;
+	mainFrame.BorderStyle:=bsNone;
+	CreateFormFromImage(mainFrame.Handle,ExpandConstant('{tmp}\bg.png'));
+
 	//beautify window
 	with WizardForm do begin
 		AutoScroll := False;
@@ -25,8 +30,7 @@ begin
 
 	//drag window
 	WizardForm.OnMouseDown := @WizardFormMouseDown;
-	mainBg:=ImgLoad(WizardForm.Handle, ExpandConstant('{tmp}\bg.png'), 0, 0, 600, 400, True, True);
-	io:= 5;
+	mainBg:=ImgLoad(WizardForm.Handle, ExpandConstant('{tmp}\bg.png'), 0, 0, 0, 0, True, True);
 	
 	//minimize btn
 	Minimize:=BtnCreate(WizardForm.Handle, winWidth-48, 4, 22, 22, ExpandConstant('{tmp}\minimizeBtn.png'), 3, False);

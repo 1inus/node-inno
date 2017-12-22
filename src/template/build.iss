@@ -6,13 +6,11 @@
 var
 	installStep : Longint;
 	progressPanel: TPanel; //主要面板
-	
-	io : integer;
+
+	Label1: TLabel;
 
 	//百分比
 	PBOldProc : Longint;
-	
-	currentPage : TNewStaticText;
 	
 #include "includes\common.iss";
 #include "includes\resetMainWindow.iss";
@@ -52,18 +50,6 @@ end;
 //使用这个事件函数启动时改变向导或向导页。你不能在它触发之后使用 InitializeSetup 事件函数，向导窗体不退出
 procedure InitializeWizard();
 begin
-
-	currentPage := TNewStaticText.Create(WizardForm);
-	with currentPage do
-	begin
-		Parent := WizardForm;
-		Caption := '界面1';
-		Left := 10;
-		Top := 10;
-		Width := ScaleX(77);
-		Height := ScaleY(14);
-	end;
-
 	ExtractTmpFiles;
 	resetMainWindow(win_width, win_height);
 	initDetailPanel;
@@ -71,8 +57,18 @@ begin
 	createFinishPanel(0, 250, 240, 60);
 	installStep := wpWelcome;
 	PBOldProc:=SetWindowLong(WizardForm.ProgressGauge.Handle,-4,PBCallBack(@PBProc,4));
-	detailPanel.show;
+	showDetailPanel;
 	hideProgressPanel;
+
+	Label1 := TLabel.Create(WizardForm);
+	with Label1 do
+	begin
+		Parent := WizardForm;
+		Caption := 'Label1';
+		Transparent := False;
+		Left := ScaleX(10);
+		Top := ScaleY(10);
+	end;
 end;
 
 //在这里是正在安装页面
@@ -81,16 +77,31 @@ procedure CurPageChanged(CurPageID: Integer);
 var RCode: Integer;
 begin
 	//ImgRelease(mainBg);
-	//mainBg:=ImgLoad(WizardForm.Handle, ExpandConstant('{tmp}\bg.png'), 0, 0, 434, 384, True, True);
+	//mainBg:=ImgLoad(WizardForm.Handle, ExpandConstant('{tmp}\bg.png'), 0, 0, win_width, win_height, True, True);
 
+	Label1.Caption := IntTostr(CurPageID);
+
+	//WelcomePage=1  SelectDirPage=6 ReadyPage=10 InstallingPage=12 FinishedPage=14 
+	//wpWelcome = 1;
+	//wpLicense = 2;
+	//wpPassword = 3;
+	//wpInfoBefore = 4;
+	//wpUserInfo = 5;
+	//wpSelectDir = 6;
+	//wpSelectComponents = 7;
+	//wpSelectProgramGroup = 8;
+	//wpSelectTasks = 9;
+	//wpReady = 10;
+	//wpPreparing = 11;
+	//wpInstalling = 12;
+	//wpInfoAfter = 13;
+	//wpFinished = 14;
 
 	//正在安装
 	if CurPageID = wpInstalling then begin
 		installStep := wpInstalling;
-		detailPanel.hide;
+		hideDetailPanel;
 		setEnableCloseBtn(true);
-
-		currentPage.Caption:="InstallingPage";
 
 		//显示安装中页面
 		showProgressPanel;

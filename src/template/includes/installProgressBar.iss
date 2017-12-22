@@ -10,9 +10,9 @@ begin
 	with progressPanel do begin
 		Parent := WizardForm;
 		Left := 0;
-		Top := slidebar_height;
+		Top := ad_bar_height;
 		Width := win_width;
-		Height := win_height-slidebar_height;
+		Height := win_height-ad_bar_height;
 		BevelOuter := bvNone;
 		parentColor:=false;
 		ParentBackground:=false;
@@ -44,10 +44,10 @@ begin
 		hide;
 	end;
 	
-	progressBar:=ImgLoad(WizardForm.handle, ExpandConstant('{tmp}\progress.png'), 		pbarLeft,	pbarTop, 0,			pbarHeight, True, True);
 	progressBarBg:=ImgLoad(WizardForm.handle, ExpandConstant('{tmp}\progressBg.png'),	pbarLeft,	pbarTop, pbarWidth,	pbarHeight, True, True);
-	ImgSetVisibility(progressBar, false);
+	progressBar:=ImgLoad(WizardForm.handle, ExpandConstant('{tmp}\progress.png'), 		pbarLeft,	pbarTop, 0,			pbarHeight, True, True);
 	ImgSetVisibility(progressBarBg, false);
+	ImgSetVisibility(progressBar, false);
 end;
 
 procedure showProgressPanel;

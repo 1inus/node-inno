@@ -6,12 +6,14 @@ begin
 	BtnSetChecked(btnId, not BtnGetChecked(btnId));
 end;
 
-function createCheckBoxBtn(posiLeft:Longint; posiTop:Longint; btnParent:TWinControl; labelText:string; labelWdith:Longint; isChecked:Boolean):HWND;
+function createCheckBoxBtn(posiLeft:Longint; posiTop:Longint; btnParent:TWinControl; labelText:string; labelWdith:Longint; isChecked:Boolean):TLabel;
 var btnId:HWND;
+	mylabel:TLabel;
 begin
 	btnId :=BtnCreate(btnParent.Handle, posiLeft, posiTop, 16, 16, ExpandConstant('{tmp}\CheckBox.png'),1,true);
 	
-	with TLabel.Create(WizardForm) do begin
+	mylabel := TLabel.Create(WizardForm);
+	with mylabel do begin
 		AutoSize:=true;
 		SetBounds(posiLeft+20, posiTop-2, labelWdith, 14);
 		Transparent:=True;
@@ -25,9 +27,8 @@ begin
 	
 	BtnSetChecked(btnId, isChecked);
 	
-	result := btnId;
+	result := mylabel;
 end;
-
 
 function ColorToRGB(Color: TColor): Longint;
 begin
@@ -42,6 +43,7 @@ end;
 procedure ExtractTmpFiles;
 begin
 	ExtractTemporaryFile('bg.png');
+	ExtractTemporaryFile('bg.bmp');
 	ExtractTemporaryFile('minimizeBtn.png');
 	ExtractTemporaryFile('closeBtn.png');
 	ExtractTemporaryFile('installBtn.png');

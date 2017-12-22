@@ -24,6 +24,7 @@ VersionInfoCompany		= {#appPublisher}
 VersionInfoCopyright	= {#appPublisher}
 AppComments				= {#MyComments}
 VersionInfoVersion		= {#appVersion}
+WizardImageFile="inno-resource\bg.bmp"
 
 AppPublisher			= {#appPublisher}
 AppPublisherURL			= {#appURL}
