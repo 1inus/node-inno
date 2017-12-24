@@ -20,10 +20,7 @@ end;
 procedure licenseCheckCheckClick(hBtn:HWND);
 begin
 	if {{ui.licenseCheckbox.show}} then begin
-		if BtnGetChecked(licenseCheck) = true then
-			BtnSetEnabled(installBtn,true)
-		else
-			BtnSetEnabled(installBtn,false);
+		BtnSetEnabled(installBtn,BtnGetChecked(licenseCheck) = true);
 	end;
 end;
 
@@ -72,6 +69,7 @@ begin
 	//install button
 	installBtn:=BtnCreate(WizardForm.Handle, {{ui.installButton.left}}, {{ui.installButton.top}}, {{ui.installButton.width}}, {{ui.installButton.height}}, ExpandConstant('{tmp}\installBtn.png'), 3, False);
 	BtnSetEvent(installBtn, BtnClickEventID, WrapBtnCallback(@installBtnClick, 1));
+	BtnSetEnabled(installBtn, {{ui.licenseCheckbox.checked}});
 
 	//输入安装路径
 	if {{ui.installDirInput.show}} then begin
@@ -104,7 +102,6 @@ begin
 			top:={{ui.licenseText.top}}-2;
 			Cursor:= crHand;
 			Transparent:=True;
-			Font.Color := clblue;
 			Font.Name := fontName;
 			Font.Size := smallFontSize; 
 			Font.Style := [fsUnderline];

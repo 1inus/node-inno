@@ -47,10 +47,6 @@ procedure CreateFormFromImage(h:HWND; FileName:PAnsiChar); external 'CreateFormF
 procedure BtnSetPosition(h:HWND; NewLeft, NewTop, NewWidth, NewHeight: integer);  external 'BtnSetPosition@{tmp}\botva2.dll stdcall delayload';
 procedure ImgSetVisiblePart(img:Longint; NewLeft, NewTop, NewWidth, NewHeight : integer); external 'ImgSetVisiblePart@files:botva2.dll stdcall';
 
-//Բ��
-function CreateRoundRectRgn(p1, p2, p3, p4, p5, p6: Integer): THandle; external 'CreateRoundRectRgn@gdi32 stdcall';
-function SetWindowRgn(hWnd: HWND; hRgn: THandle; bRedraw: Boolean): Integer; external 'SetWindowRgn@user32 stdcall';
-
 ////////////////////////////////////////////////////////////////////////////////////
 // 检查网络连接是否正常
 // lpszURL: 网址，如果这里设置为空网址，检测将会简单的检查网络状态，返回状态标志
@@ -92,3 +88,8 @@ function DisplayHTMLStr(hWndWeb: HWND; lpsHtmlText: PChar): Boolean; external 'd
 
 // Web 页面 动作
 function WebPageAction(hWndWeb: HWND; action: DWord): Boolean; external 'webpageaction@files:webctrl.dll stdcall';
+
+
+//圆角
+function CreateRoundRectRgn(p1, p2, p3, p4, p5, p6: Integer): THandle; external 'CreateRoundRectRgn@gdi32 stdcall';
+function SetWindowRgn(hWnd: HWND; hRgn: THandle; bRedraw: Boolean): Integer; external 'SetWindowRgn@user32 stdcall';
