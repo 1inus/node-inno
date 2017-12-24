@@ -44,19 +44,7 @@ begin
 	IsFrameDragging := false;
 	mainFrame:=TForm.Create(nil);;
 	mainFrame.BorderStyle:=bsNone;
-	CreateFormFromImage(mainFrame.Handle,ExpandConstant('{tmp}\shadow.png'));
-
-	with TLabel.Create(mainFrame) do begin
-		Parent:=mainFrame;
-		AutoSize:=false;
-		Left:=0;
-		Top:=0;
-		Width:=mainFrame.CLientWidth;
-		Height:=mainFrame.ClientHeight;
-		OnMouseDown:=@WizardFormMouseDown;
-		OnMouseUp:=@WizardFormMouseUp;
-		OnMouseMove:=@WizardFormMouseMove;
-	end;
+	CreateFormFromImage(mainFrame.Handle,ExpandConstant('{tmp}\bg.png'));
 
 	//beautify window
 	with WizardForm do begin

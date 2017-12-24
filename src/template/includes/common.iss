@@ -30,38 +30,6 @@ begin
 	result := mylabel;
 end;
 
-function ColorToRGB(Color: TColor): Longint;
-begin
-	if Color < 0 then
-		Result := GetSysColor(Color and $000000FF)
-	else
-		Result := Color;
-end;
-
-
-//安装界面准备初始化，释放文件到临时目录
-procedure ExtractTmpFiles;
-begin
-	ExtractTemporaryFile('bg.png');
-	ExtractTemporaryFile('bg.bmp');
-	ExtractTemporaryFile('minimizeBtn.png');
-	ExtractTemporaryFile('closeBtn.png');
-	ExtractTemporaryFile('installBtn.png');
-	ExtractTemporaryFile('startAppBtn.png');
-	ExtractTemporaryFile('browserBtn.png');
-	ExtractTemporaryFile('checkBox.png');
-	ExtractTemporaryFile('license.txt');
-	ExtractTemporaryFile('progress.png');
-	ExtractTemporaryFile('progressBg.png');
-end;
-
-//拖动窗口
-procedure WizardFormMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-begin
-	ReleaseCapture
-	SendMessage(WizardForm.Handle, WM_SYSCOMMAND, $F012, 0)
-end;
-
 //安装按钮点击
 procedure installBtnClick(hBtn:HWND);
 begin
@@ -81,6 +49,7 @@ begin
 	if installStep = wpFinished then begin
 		WizardForm.NextButton.Click;
 	end else if installStep = wpWelcome then begin
+		FreeAllWebWnd;
 		WizardForm.Close;
 	end;
 end;

@@ -1,4 +1,4 @@
-﻿(*********************************************************************************)
+(*********************************************************************************)
 (*                                                                               *)
 (* Below is the list of support classes that can be used from within the Pascal  *)
 (* script. There are also three support objects available: MainForm of type      *)
@@ -14,6 +14,8 @@
 (*********************************************************************************)
 
 Type
+  AnsiString = String;
+
   TObject = class
     constructor Create;
     procedure Free;
@@ -35,7 +37,7 @@ Type
     function Seek(Offset: Longint; Origin: Word): Longint;
     procedure ReadBuffer(Buffer: String; Count: Longint);
     procedure WriteBuffer(Buffer: String; Count: Longint);
-    function CopyFrom(Source: TStream; Count: Int64): Longint;
+    function CopyFrom(Source: TStream; Count: Longint): Longint;
     property Position: Longint; read write;
     property Size: Longint; read write;
   end;
@@ -87,8 +89,6 @@ Type
 
   TShortCut = Word;
 
-  TIMAGEINDEX = Integer;
-
   TMenuItem = class(TComponent)
     constructor Create(AOwner: TComponent);
     procedure Insert(Index: Integer; Item: TMenuItem);
@@ -116,25 +116,11 @@ Type
     property ShortCut: TShortCut; read write;
     property Visible: Boolean; read write;
     property OnClick: TNotifyEvent; read write;
-    property ImageIndex: TImageIndex; read write;
   end;
 
   TMenuChangeEvent = procedure (Sender: TObject; Source: TMenuItem; Rebuild: Boolean);
 
   TFindItemKind = (fkCommand, fkHandle, fkShortCut);
-
-  TWMMenuChar = record
-    Msg: Cardinal;
-    User: Char;
-    MenuFlag: Word; { MF_POPUP, MF_SYSMENU }
-    Menu: HMENU;
-    Result: Longint;
-  end;
-
-  TMenuItemAutoFlag = (maAutomatic, maManual, maParent);
-  TMenuAutoFlag = TMenuItemAutoFlag;
-
-  TBiDiMode = (bdLeftToRight, bdRightToLeft, bdRightToLeftNoAlign, bdRightToLeftReadingOnly);
 
   TMenu = class(TComponent)
     constructor Create(AOwner: TComponent);
@@ -145,15 +131,6 @@ Type
     property Handle: HMENU; read;
     property WindowHandle: HWnd; read write;
     property Items: TMenuItem; read;
-    property Images: TCustomImageList; read write;
-    function IsRightToLeft: Boolean;
-    procedure ParentBiDiModeChanged(AControl: TObject);
-    procedure ProcessMenuChar(var Message: TWMMenuChar);
-    property AutoHotkeys: TMenuAutoFlag; read write;
-    property AutoLineReduction: TMenuAutoFlag; read write;
-    property BiDiMode: TBiDiMode; read write;
-    property OwnerDraw: Boolean; read write;
-    property ParentBiDiMode: Boolean; read write;
   end;
 
   TMainMenu = class(TMenu)
@@ -167,10 +144,6 @@ Type
 
   TPopupAlignment = (paLeft, paRight, paCenter);
 
-  TTrackButton = (tbRightButton, tbLeftButton);
-  TMenuAnimations = (maLeftToRight, maRightToLeft, maTopToBottom, maBottomToTop, maNone);
-  TMenuAnimation = set of TMenuAnimations;
-
   TPopupMenu = class(TMenu)
     constructor Create(AOwner: TComponent);
     procedure Popup(X, Y: Integer);
@@ -179,8 +152,6 @@ Type
     property AutoPopup: Boolean; read write;
     property HelpContext: THelpContext; read write;
     property OnPopup: TNotifyEvent; read write;
-    property MenuAnimation: TMenuAnimation; read write;
-    property TrackButton: TTrackButton; read write;
   end;
 
   TComponentStateE = (csLoading, csReading, csWriting, csDestroying, csDesigning, csAncestor, csUpdating, csFixups, csFreeNotification, csInline, csDesignInstance);
@@ -394,7 +365,7 @@ Type
     property Monochrome: Boolean; read write;
     property Palette: HPALETTE; read write;
     property IgnorePalette: Boolean; read write;
-    property TransparentColor: TColor; read write;
+    property TransparentColor: TColor; read;
   end;
 
   HICON = Integer;
@@ -484,7 +455,6 @@ Type
     function Focused: Boolean;
     property Controls[Index: Integer]: TControl; read;
     property ControlCount: Integer; read;
-    property DoubleBuffered: Boolean; read write;
     function HandleAllocated: Boolean;
     procedure HandleNeeded;
     procedure EnableAlign;
@@ -607,7 +577,7 @@ Type
 
   TCloseQueryEvent = procedure(Sender: TObject; var CanClose: Boolean);
 
-  TEShiftState = (ssShift, ssAlt, ssCtrl, ssLeft, ssRight, ssMiddle, ssDouble, ssMeta, ssSuper, ssHyper, ssAltGr, ssCaps, ssNum, ssScroll, ssTriple, ssQuad);
+  TEShiftState = (ssShift, ssAlt, ssCtrl, ssLeft, ssRight, ssMiddle, ssDouble);
   TShiftState = set of TEShiftState;
 
   TKeyEvent = procedure(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -813,8 +783,6 @@ Type
     x, y: Longint;
   end;
 
-  TTextLayout = (tlTop, tlCenter, tlBottom);
-
   TLabel = class(TCustomLabel)
     property Alignment: TAlignment; read write;
     property AutoSize: Boolean; read write;
@@ -822,7 +790,6 @@ Type
     property Color: TColor; read write;
     property FocusControl: TWinControl; read write;
     property Font: TFont; read write;
-    property Layout: TTextLayout; read write;
     property ParentColor: Boolean; read write;
     property ParentFont: Boolean; read write;
     property Transparent: Boolean; read write;
@@ -1037,8 +1004,6 @@ Type
   end;
 
   TNewButton = class(TButton)
-    property OnMouseEnter: TNotifyEvent; read write;
-    property OnMouseLeave: TNotifyEvent; read write;
   end;
 
   TCustomCheckBox = class(TButtonControl)
@@ -1856,8 +1821,6 @@ Type
     property LargeImages: TImageList; read write;
     property SmallImages: TImageList; read write;
     property StateImages: TImageList; read write;
-    property ParentColor: Boolean; read write;
-    property ParentFont: Boolean; read write;
     property OnMouseEnter: TNotifyEvent; read write;
     property OnMouseLeave: TNotifyEvent; read write;
   end;
@@ -1922,7 +1885,6 @@ Type
     property ParentFont: Boolean; read write;
     property ShowAccelChar: Boolean; read write;
     property WordWrap: Boolean; read write;
-    property Transparent: Boolean; read write;
     property OnClick: TNotifyEvent; read write;
     property OnDblClick: TNotifyEvent; read write;
     property DragCursor: Longint; read write;
@@ -2758,9 +2720,7 @@ Type
     property ShowTodayCircle: Boolean; read write;
     property WeekNumbers: Boolean; read write;
     property OnGetMonthInfo: TOnGetMonthInfoEvent; read write;
-    property Color: TColor; read write;
     property Font: TFont; read write;
-    property ParentColor: Boolean; read write;
     property ParentFont: Boolean; read write;
     property OnClick: TNotifyEvent; read write;
     property OnDblClick: TNotifyEvent; read write;
@@ -2777,19 +2737,6 @@ Type
     property OnStartDrag: TStartDragEvent; read write;
     property OnChange: TNotifyEvent; read write;
   end;
-
-  HResult = LongInt;
-
-  TGUID = record
-    D1: LongWord;
-    D2: Word;
-    D3: Word;
-    D4: array[0..7] of Byte;
-  end;
-
-  TCLSID = TGUID;
-
-  TIID = TGUID;
 
 (******************************************************************)
 (*                                                                *)
@@ -3140,12 +3087,9 @@ function ExitSetupMsgBox: Boolean;
 
 // COM Automation objects support functions
 
-function CreateOleObject(const ClassName: string): Variant;
-function GetActiveOleObject(const ClassName: string): Variant;
-function IDispatchInvoke(Self: IDispatch; PropertySet: Boolean; const Name: String; Par: array of variant): variant;
-function CreateComObject(const ClassID: TGUID): IUnknown;
-function StringToGUID(const S: String): TGUID;
 procedure OleCheck(Result: HResult);
+function CreateOleObject(const ClassName: String): Variant;
+function GetActiveOleObject(const ClassName: String): Variant;
 procedure CoFreeUnusedLibraries;
 
 // Setup Logging functions
@@ -3163,7 +3107,6 @@ function NewPopupMenu(Owner: TComponent; const AName: String; Alignment: TPopupA
 function NewSubMenu(const ACaption: String; hCtx: Word; const AName: String; Items: array of TMenuItem; AEnabled: Boolean): TMenuItem;
 function NewItem(const ACaption: String; AShortCut: TShortCut; AChecked, AEnabled: Boolean; AOnClick: TNotifyEvent; hCtx: Word; const AName: String): TMenuItem;
 function NewLine: TMenuItem;
-procedure DrawMenuItem(MenuItem: TMenuItem; ACanvas: TCanvas; ARect: TRect; State: TOwnerDrawState);
 
 // Other functions
 
@@ -3216,8 +3159,6 @@ function FreeDLL(const DLLHandle: Longint): Boolean;
 
 function CastStringToInteger(var S: String): Longint;
 function CastIntegerToString(const L: Longint): String;
-function CastAnsiStringToInteger(var S: AnsiString): Longint;
-function CastIntegerToAnsiString(const L: Longint): AnsiString;
 
 (********************************************************)
 (*                                                      *)
@@ -3399,32 +3340,32 @@ const
   MSecPerDay = 86400000;
   DateDelta = 693594;
 
-  clScrollBar           = $FF000000;
-  clBackground          = $FF000001;
-  clActiveCaption       = $FF000002;
-  clInactiveCaption     = $FF000003;
-  clMenu                = $FF000004;
-  clWindow              = $FF000005;
-  clWindowFrame         = $FF000006;
-  clMenuText            = $FF000007;
-  clWindowText          = $FF000008;
-  clCaptionText         = $FF000009;
-  clActiveBorder        = $FF00000A;
-  clInactiveBorder      = $FF00000B;
-  clAppWorkSpace        = $FF00000C;
-  clHighlight           = $FF00000D;
-  clHighlightText       = $FF00000E;
-  clBtnFace             = $FF00000F;
-  clBtnShadow           = $FF000010;
-  clGrayText            = $FF000011;
-  clBtnText             = $FF000012;
-  clInactiveCaptionText = $FF000013;
-  clBtnHighlight        = $FF000014;
-  cl3DDkShadow          = $FF000015;
-  cl3DLight             = $FF000016;
-  clInfoText            = $FF000017;
-  clInfoBk              = $FF000018;
-  clHotLight            = $FF00001A;
+  clScrollBar           = $80000000;
+  clBackground          = $80000001;
+  clActiveCaption       = $80000002;
+  clInactiveCaption     = $80000003;
+  clMenu                = $80000004;
+  clWindow              = $80000005;
+  clWindowFrame         = $80000006;
+  clMenuText            = $80000007;
+  clWindowText          = $80000008;
+  clCaptionText         = $80000009;
+  clActiveBorder        = $8000000A;
+  clInactiveBorder      = $8000000B;
+  clAppWorkSpace        = $8000000C;
+  clHighlight           = $8000000D;
+  clHighlightText       = $8000000E;
+  clBtnFace             = $8000000F;
+  clBtnShadow           = $80000010;
+  clGrayText            = $80000011;
+  clBtnText             = $80000012;
+  clInactiveCaptionText = $80000013;
+  clBtnHighlight        = $80000014;
+  cl3DDkShadow          = $80000015;
+  cl3DLight             = $80000016;
+  clInfoText            = $80000017;
+  clInfoBk              = $80000018;
+  clHotLight            = $8000001A;
 
   clBlack   = $000000;
   clMaroon  = $000080;

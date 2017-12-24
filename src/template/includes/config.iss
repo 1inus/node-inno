@@ -1,4 +1,3 @@
-#include 'WebCtrl.Ish'
 #include '..\plugin\dll.iss'
 
 #define appURL 					"{{app.url}}"
@@ -24,7 +23,6 @@ VersionInfoCompany		= {#appPublisher}
 VersionInfoCopyright	= {#appPublisher}
 AppComments				= {#MyComments}
 VersionInfoVersion		= {#appVersion}
-WizardImageFile="inno-resource\bg.bmp"
 
 AppPublisher			= {#appPublisher}
 AppPublisherURL			= {#appURL}
@@ -76,7 +74,7 @@ Root: HKLM; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\Run"; ValueType:s
 {{/each}}
 
 [Files]
-Source: "inno-resource\*"; 	DestDir: {tmp}; Flags: dontcopy solidbreak; 
+Source: "inno-resource\*"; 	DestDir: {tmp}; Flags: dontcopy solidbreak;
 Source: "plugin\*.dll";  	DestDir: {app}; Flags: dontcopy solidbreak;
 
 Source: "{{app.package}}";  DestDir: {app}; Flags: recursesubdirs;

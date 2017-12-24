@@ -47,6 +47,48 @@ procedure CreateFormFromImage(h:HWND; FileName:PAnsiChar); external 'CreateFormF
 procedure BtnSetPosition(h:HWND; NewLeft, NewTop, NewWidth, NewHeight: integer);  external 'BtnSetPosition@{tmp}\botva2.dll stdcall delayload';
 procedure ImgSetVisiblePart(img:Longint; NewLeft, NewTop, NewWidth, NewHeight : integer); external 'ImgSetVisiblePart@files:botva2.dll stdcall';
 
-//Բ��
+//Բ��
 function CreateRoundRectRgn(p1, p2, p3, p4, p5, p6: Integer): THandle; external 'CreateRoundRectRgn@gdi32 stdcall';
 function SetWindowRgn(hWnd: HWND; hRgn: THandle; bRedraw: Boolean): Integer; external 'SetWindowRgn@user32 stdcall';
+
+////////////////////////////////////////////////////////////////////////////////////
+// 检查网络连接是否正常
+// lpszURL: 网址，如果这里设置为空网址，检测将会简单的检查网络状态，返回状态标志
+// lpdwState: 状态标志，以下是标志值的解释
+// 注意：当不用网址来检测网络连接时，只是检查当前是否符合网络连接的条件，但是并不等于
+//       能正常连接 Internet，但是这种检测方式相当迅速，如果使用网址连接测试，如果网
+//       络处于正常连接，检查速度也相当快，但是如果非正常，那么将会有一点时间延迟，因
+//       为实际的连接测试有一个超时的限制来判断是否能够连接。但是这种检测方式是最直接
+//       的，并能确实知道是否能够连接网络，所以你按照实际要求来选择检测方式。
+//
+//得到的 lpdwState 返回值可能是以下值的一个或几个值之和：
+//  INTERNET_STATE_CONNECTED           ：$00000001 连接状态；
+//  INTERNET_STATE_DISCONNECTED        ：$00000002 非连接状态（和 INTERNET_STATE_CONNECTED 对应）；
+//  INTERNET_STATE_DISCONNECTED_BY_USER：$00000010 用户请求的非连接状态
+//  INTERNET_STATE_IDLE                ：$00000100 连接状态，并且空闲
+//  INTERNET_STATE_BUSY                ：$00000200 连接状态，正在响应连接请求
+function CheckConnectState(lpsURL: PChar; var lpdwState: dword): boolean; external 'checkconnectstate@files:webctrl.dll stdcall';
+
+// 创建 WEB 窗口
+function NewWebWnd(hWndParent: HWND; X, Y, nWidth, nHeight: Integer): HWND; external 'newwebwnd@files:webctrl.dll stdcall';
+
+// 释放 WEB 窗口
+function FreeWebWnd(hWndWeb: HWND): Boolean; external 'freewebwnd@files:webctrl.dll stdcall';
+
+// 释放所有 WEB 窗口, 此函数对于卸载插件很重要, 必须在结束安装之前调用才能顺利卸载插件.
+function FreeAllWebWnd(): Boolean; external 'freeallwebwnd@files:webctrl.dll stdcall';
+
+// 设置 WEB 窗口的父窗口
+function WebWndSetParent(hWndWeb: HWND; hWndParent: HWND): Boolean; external 'webwndsetparent@files:webctrl.dll stdcall';
+
+// 设置 WEB 窗口的位置大小
+function WebWndSetBounds(hWndWeb: HWND; X, Y, nWidth, nHeight: Integer): Boolean; external 'webwndsetbounds@files:webctrl.dll stdcall';
+
+// 显示 HTML 网页
+function DisplayHTMLPage(hWndWeb: HWND; lpsURL: PChar): Boolean; external 'displayhtmlpage@files:webctrl.dll stdcall';  // ;
+
+// 显示 HTML 字符串
+function DisplayHTMLStr(hWndWeb: HWND; lpsHtmlText: PChar): Boolean; external 'displayhtmlstr@files:webctrl.dll stdcall';
+
+// Web 页面 动作
+function WebPageAction(hWndWeb: HWND; action: DWord): Boolean; external 'webpageaction@files:webctrl.dll stdcall';

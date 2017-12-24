@@ -106,7 +106,6 @@
                 console.error(this.colorRed, `× "${targetJson.app.package}" not exist ×`);
                 return false;
             }
-            console.log(this.colorYellow, JSON.stringify(targetJson, null, 4));
             targetJson = require('extend')(true, defaultJson, targetJson);
             console.log(this.colorYellow, '\n\ntarget config :');
             console.log(this.colorYellow, JSON.stringify(targetJson, null, 4));
@@ -115,6 +114,7 @@
                 try {
                     fs.copySync(path.join(nodeInnoBase, "template/package"), buildTempRoot);
                     let scripts = [
+                        "adBar.iss",
                         "common.iss",
                         "config.iss",
                         "const.iss",

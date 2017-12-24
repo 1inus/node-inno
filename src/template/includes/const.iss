@@ -24,15 +24,4 @@ const
 	MyCursor1 = 101;
 	MyCursor2 = 102;
 
-	win_Width = 820;
-	win_Height = 520;
 	ad_bar_height = 250;
-	virtual_box_top = ad_bar_height;
-	virtual_box_left = 0;
-
-	isShowLicense 			= {{ui.showLicense}};
-	isShowInstallPath 		= {{ui.showInstallPath}};
-	isShowAgreeLicense 		= {{ui.showAgreeLicense}};
-	isShowCreateShortcut 	= {{ui.showCreateShortcut}};
-	isShowStartupOnFinish 	= {{ui.showStartupOnFinish}};
-	isShowStartupOnBootstrap = {{ui.showStartupOnBootstrap}};

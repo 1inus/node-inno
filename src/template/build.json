@@ -3,21 +3,80 @@
 	"ui": {
 		"encoding": "gbk",
 		"fontName": "Microsoft YaHei",
-		"textLicense": "许可协议",
-		"textMoreOptions": "更多安装选项",
-		"textCancleInstall": "取消安装",
-		"textAgreeLicense": "已经阅读,并同意",
-		"textCreateShortcut": "创建桌面快捷方式",
-		"textStartupOnFinish": "立即运行程序",
-		"textStartupOnBootstrap": "开机启动",
-		"textCancleInstallMsgbox": "确定取消安装吗？",
-		"showLicense": true,
-		"showMoreOptions": true,
-		"showInstallPath": true,
-		"showAgreeLicense": true,
-		"showCreateShortcut": true,
-		"showStartupOnFinish": true,
-		"showStartupOnBootstrap": true
+		"licenseText": {
+			"text": "许可协议",
+			"top": 12,
+			"left": 12,
+			"show": true
+		},
+		"moreOptions": {
+			"text": "更多安装选项",
+			"top": 12,
+			"left": 12,
+			"show": true
+		},
+		"licenseCheckbox": {
+			"text": "已经阅读,并同意",
+			"top": 12,
+			"left": 12,
+			"show": true
+		},
+		"createShortcutCheckbox": {
+			"text": "创建桌面快捷方式",
+			"top": 12,
+			"left": 12,
+			"show": true
+		},
+		"startupOnFinishCheckbox": {
+			"text": "立即运行程序",
+			"top": 12,
+			"left": 12,
+			"show": true
+		},
+		"StartupOnBootstrapCheckbox": {
+			"text": "开机启动",
+			"top": 12,
+			"left": 12,
+			"show": true
+		},
+		"cancleInstallMsgbox": {
+			"text": "确定取消安装吗？",
+			"show": true
+		},
+		"progressBar": {
+			"top": 12,
+			"left": 12,
+			"width": 400,
+			"height": 20,
+			"show": true
+		},
+		"progressText": {
+			"top": 12,
+			"left": 12,
+			"width": 400,
+			"show": true
+		},
+		"installButton": {
+			"top": 12,
+			"left": 12,
+			"width": 230,
+			"height": 50,
+			"show": true
+		},
+		"finishButton": {
+			"top": 12,
+			"left": 12,
+			"width": 230,
+			"height": 50,
+			"show": true
+		},
+		"minimizeButton": {
+			"top": 12,
+			"left": 12,
+			"width": 230,
+			"height": 50,
+			"show": true
+		}
 	},
 	"installDetail": {
 		"installPath": "",
@@ -29,14 +88,16 @@
 		"defaultInstallDir": "{pf}",
 		"uninstallBeforeInstall": true
 	},
-	"registry": [{
-		"root": "",
-		"subkey": "",
-		"type": "",
-		"name": "",
-		"value": "",
-		"flags": ""
-	}],
+	"registry": [
+		{
+			"root": "",
+			"subkey": "",
+			"type": "",
+			"name": "",
+			"value": "",
+			"flags": ""
+		}
+	],
 	"app": {
 		"id": "myapp_id",
 		"name": "myapp",

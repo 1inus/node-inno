@@ -7,13 +7,14 @@ var
 	installStep : Longint;
 	progressPanel: TPanel; //主要面板
 
-	Label1: TLabel;
+	mainFrame : TForm;
 
 	//百分比
 	PBOldProc : Longint;
 	
 #include "includes\common.iss";
 #include "includes\resetMainWindow.iss";
+#include "includes\adBar.iss";
 #include "includes\installDetail.iss";
 #include "includes\installProgressBar.iss";
 #include "includes\installFinish.iss";
@@ -47,11 +48,25 @@ begin
 		result := true;
 end;
 
+
 //使用这个事件函数启动时改变向导或向导页。你不能在它触发之后使用 InitializeSetup 事件函数，向导窗体不退出
 procedure InitializeWizard();
 begin
-	ExtractTmpFiles;
-	resetMainWindow(win_width, win_height);
+	ExtractTemporaryFile('bg.png');
+	ExtractTemporaryFile('shadow.png');
+	ExtractTemporaryFile('inputBorder.png');
+	ExtractTemporaryFile('minimizeBtn.png');
+	ExtractTemporaryFile('closeBtn.png');
+	ExtractTemporaryFile('installBtn.png');
+	ExtractTemporaryFile('startAppBtn.png');
+	ExtractTemporaryFile('browserBtn.png');
+	ExtractTemporaryFile('checkBox.png');
+	ExtractTemporaryFile('license.html');
+	ExtractTemporaryFile('progress.png');
+	ExtractTemporaryFile('progressBg.png');
+
+	resetMainWindow;
+	initAdBar;
 	initDetailPanel;
 	createProgressPanel(0, 250, win_width, 150);
 	createFinishPanel(0, 250, 240, 60);
@@ -59,16 +74,6 @@ begin
 	PBOldProc:=SetWindowLong(WizardForm.ProgressGauge.Handle,-4,PBCallBack(@PBProc,4));
 	showDetailPanel;
 	hideProgressPanel;
-
-	Label1 := TLabel.Create(WizardForm);
-	with Label1 do
-	begin
-		Parent := WizardForm;
-		Caption := 'Label1';
-		Transparent := False;
-		Left := ScaleX(10);
-		Top := ScaleY(10);
-	end;
 end;
 
 //在这里是正在安装页面
@@ -78,8 +83,6 @@ var RCode: Integer;
 begin
 	//ImgRelease(mainBg);
 	//mainBg:=ImgLoad(WizardForm.Handle, ExpandConstant('{tmp}\bg.png'), 0, 0, win_width, win_height, True, True);
-
-	Label1.Caption := IntTostr(CurPageID);
 
 	//WelcomePage=1  SelectDirPage=6 ReadyPage=10 InstallingPage=12 FinishedPage=14 
 	//wpWelcome = 1;

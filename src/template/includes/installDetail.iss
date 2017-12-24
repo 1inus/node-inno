@@ -1,10 +1,10 @@
 var
-	detailPanel: TPanel; //主要面板
 	installBtn, browerBtn: HWND; //右上角按钮+取消窗口
-	
+
 	//选择框
 	licenseCheck, DesktopCheck, startupOnFinishBtn, startupOnBootupBtn: HWND; //
 	installPath:TNewEdit;
+	inputBorder:Longint;
 
 	licenseLabel, startupOnFinishLabel, startupOnBootupLabel, DesktopCheckLabel, licenseLabelFile:TLabel;
 
@@ -19,7 +19,7 @@ end;
 //license check
 procedure licenseCheckCheckClick(hBtn:HWND);
 begin
-	if isShowLicense = true then begin
+	if {{ui.licenseCheckbox.show}} then begin
 		if BtnGetChecked(licenseCheck) = true then
 			BtnSetEnabled(installBtn,true)
 		else
@@ -68,72 +68,78 @@ end;
 
 //初始化安装细节配置
 procedure initDetailPanel();
-var btnLeft:Longint;
-
 begin
 	//install button
-	btnLeft:=(win_width-231)/2;
-	installBtn:=BtnCreate(WizardForm.Handle, btnLeft, virtual_box_top, 231, 56, ExpandConstant('{tmp}\browserBtn.png'), 3, False);
+	installBtn:=BtnCreate(WizardForm.Handle, {{ui.installButton.left}}, {{ui.installButton.top}}, {{ui.installButton.width}}, {{ui.installButton.height}}, ExpandConstant('{tmp}\installBtn.png'), 3, False);
 	BtnSetEvent(installBtn, BtnClickEventID, WrapBtnCallback(@installBtnClick, 1));
 
 	//输入安装路径
-	if isShowInstallPath = true then begin
+	if {{ui.installDirInput.show}} then begin
 		installPath := TNewEdit.Create(WizardForm);
 		with installPath do begin
+			AutoSize:=false;
 			Parent := WizardForm;
-			Left := virtual_box_left;
-			Top := virtual_box_top+60;
-			Width := 300;
-			Height := 30;
-			Font.Size := smallFontSize;
+			Left := {{ui.installDirInput.left}}+8;
+			Top := {{ui.installDirInput.top}}+6;
+			Width := {{ui.installDirInput.width}}-16;
+			Height := {{ui.installDirInput.height}}-12;
+			Font.Size := {{ui.installDirInput.height}}-22;
 			Font.Name := fontName;
-			//BorderStyle := bsNone;
+			Font.Color:=${{ui.installDirInput.color}};
+			BorderStyle := bsNone;
 			Text := WizardForm.DirEdit.Text;
 			OnChange := @inputInstallPath;
 		end;
-		browerBtn:=BtnCreate(WizardForm.Handle, virtual_box_left+300, virtual_box_top+60, 80, 30, ExpandConstant('{tmp}\installBtn.png'), 3, False);
+		browerBtn:=BtnCreate(WizardForm.Handle, {{ui.installDirBrowserButton.left}}, {{ui.installDirBrowserButton.top}}, {{ui.installDirBrowserButton.width}}, {{ui.installDirBrowserButton.height}}, ExpandConstant('{tmp}\browserBtn.png'), 3, False);
 		BtnSetEvent(browerBtn, BtnClickEventID, WrapBtnCallback(@browseButtonClick, 1));
+		inputBorder:=ImgLoad(WizardForm.Handle, ExpandConstant('{tmp}\inputBorder.png'), {{ui.installDirInput.left}}, {{ui.installDirInput.top}}, {{ui.installDirInput.width}}, {{ui.installDirInput.height}}, True, True);
 	end;
 	
 	// 是否显示用户协议
-	if isShowLicense = true then begin
+	if {{ui.licenseCheckbox.show}} then begin
 		licenseLabelFile := TLabel.Create(WizardForm);
 		with licenseLabelFile do begin
 			AutoSize:=true;
-			SetBounds(virtual_box_left+120, virtual_box_top+97, 98, 14);
+			left:={{ui.licenseText.left}};
+			top:={{ui.licenseText.top}}-2;
 			Cursor:= crHand;
 			Transparent:=True;
 			Font.Color := clblue;
 			Font.Name := fontName;
 			Font.Size := smallFontSize; 
 			Font.Style := [fsUnderline];
-			Caption := '{#textLicense}';
+			Font.Color:=${{ui.licenseText.color}};
+			Caption := '{{ui.licenseText.text}}';
 			Parent := WizardForm;
 			OnClick:=@ShowLicense;
 		end;
 		
-		licenseLabel:= createCheckBoxBtn(virtual_box_left, virtual_box_top+100, WizardForm, '{#textAgreeLicense}', 100, {{installDetail.agreeLicense}});
+		licenseLabel:= createCheckBoxBtn({{ui.licenseCheckbox.left}}, {{ui.licenseCheckbox.top}}, WizardForm, '{{ui.licenseCheckbox.text}}', 100, {{ui.licenseCheckbox.checked}});
 		licenseCheck:= licenseLabel.Tag;
+		licenseLabel.Font.Color := ${{ui.licenseCheckbox.color}};
 		BtnSetEvent(licenseCheck, BtnClickEventID, WrapBtnCallback(@licenseCheckCheckClick, 1));
 		licenseLabel.OnClick := @agreeLicenseClick;
 	end;
 	
 	//快捷方式选框
-	if isShowCreateShortcut = true then begin
-		DesktopCheckLabel:= createCheckBoxBtn(virtual_box_left+260, virtual_box_top+100, WizardForm, '{#textCreateShortcut}', 100, {{installDetail.createShortcut}});
+	if {{ui.createShortcutCheckbox.show}} then begin
+		DesktopCheckLabel:= createCheckBoxBtn({{ui.createShortcutCheckbox.left}}, {{ui.createShortcutCheckbox.top}}, WizardForm, '{{ui.createShortcutCheckbox.text}}', 100, {{ui.createShortcutCheckbox.checked}});
 		DesktopCheck:= DesktopCheckLabel.Tag;
+		DesktopCheckLabel.Font.Color := ${{ui.createShortcutCheckbox.color}};
 	end;
 
 	//安装完成后 是否立即启动程序
-	if isShowStartupOnBootstrap = true then begin
-		startupOnBootupLabel:= createCheckBoxBtn(virtual_box_left+260, virtual_box_top+125, WizardForm, '{#textStartupOnBootstrap}', 100, {{installDetail.startupOnBootstrap}});
+	if {{ui.startupOnBootstrapCheckbox.show}} then begin
+		startupOnBootupLabel:= createCheckBoxBtn({{ui.startupOnBootstrapCheckbox.left}}, {{ui.startupOnBootstrapCheckbox.top}}, WizardForm, '{{ui.startupOnBootstrapCheckbox.text}}', 100, {{ui.startupOnBootstrapCheckbox.checked}});
 		startupOnBootupBtn:= startupOnBootupLabel.Tag;
+		startupOnBootupLabel.Font.Color := ${{ui.startupOnBootstrapCheckbox.color}};
 	end;
 
 	//安装完成后 是否立即启动程序
-	if isShowStartupOnFinish = true then begin
-		startupOnFinishLabel:= createCheckBoxBtn(virtual_box_left+0, virtual_box_top+125, WizardForm, '{#textStartupOnFinish}', 100, {{installDetail.startupOnFinish}});
+	if {{ui.startupOnFinishCheckbox.show}} then begin
+		startupOnFinishLabel:= createCheckBoxBtn({{ui.startupOnFinishCheckbox.left}}, {{ui.startupOnFinishCheckbox.top}}, WizardForm, '{{ui.startupOnFinishCheckbox.text}}', 100, {{ui.startupOnFinishCheckbox.checked}});
 		startupOnFinishBtn:= startupOnFinishLabel.Tag;
+		startupOnFinishLabel.Font.Color := {{ui.startupOnFinishCheckbox.color}};
 	end;
 end;
 
@@ -142,32 +148,33 @@ begin
 	BtnSetVisibility(installBtn, false);
 
 	//输入安装路径
-	if isShowInstallPath = true then begin
+	if {{ui.installDirInput.show}} then begin
 		installPath.hide;
 		BtnSetVisibility(browerBtn, false);
+		ImgSetVisibility(inputBorder, false);
 	end;
 	
 	// 是否显示用户协议
-	if isShowLicense = true then begin
+	if {{ui.licenseCheckbox.show}} then begin
 		licenseLabelFile.hide;
 		licenseLabel.hide;
 		BtnSetVisibility(licenseCheck, false);
 	end;
 	
 	//快捷方式选框
-	if isShowCreateShortcut = true then begin
+	if {{ui.createShortcutCheckbox.show}} then begin
 		BtnSetVisibility(DesktopCheck, false);
 		DesktopCheckLabel.hide;
 	end;
 
 	//安装完成后 是否立即启动程序
-	if isShowStartupOnBootstrap = true then begin
+	if {{ui.startupOnBootstrapCheckbox.show}} then begin
 		BtnSetVisibility(startupOnBootupBtn, false);
 		startupOnBootupLabel.hide;
 	end;
 
 	//安装完成后 是否立即启动程序
-	if isShowStartupOnFinish = true then begin
+	if {{ui.startupOnFinishCheckbox.show}} then begin
 		BtnSetVisibility(startupOnFinishBtn,false);
 		startupOnFinishLabel.hide;
 	end;
@@ -175,35 +182,34 @@ end;
 
 procedure showDetailPanel();
 begin
-	BtnSetVisibility(installBtn, true);
-
 	//输入安装路径
-	if isShowInstallPath = true then begin
+	if {{ui.installDirInput.show}} then begin
 		installPath.show;
 		BtnSetVisibility(browerBtn, true);
+		ImgSetVisibility(inputBorder, true);
 	end;
 	
 	// 是否显示用户协议
-	if isShowLicense = true then begin
+	if {{ui.licenseText.show}} then begin
 		licenseLabelFile.show;
 		licenseLabel.show;
 		BtnSetVisibility(licenseCheck, true);
 	end;
 	
 	//快捷方式选框
-	if isShowCreateShortcut = true then begin
+	if {{ui.createShortcutCheckbox.show}} then begin
 		BtnSetVisibility(DesktopCheck, true);
 		DesktopCheckLabel.show;
 	end;
 
 	//安装完成后 是否立即启动程序
-	if isShowStartupOnBootstrap = true then begin
+	if {{ui.startupOnBootstrapCheckbox.show}} then begin
 		BtnSetVisibility(startupOnBootupBtn, true);
 		startupOnBootupLabel.show;
 	end;
 
 	//安装完成后 是否立即启动程序
-	if isShowStartupOnFinish = true then begin
+	if {{ui.startupOnFinishCheckbox.show}} then begin
 		BtnSetVisibility(startupOnFinishBtn,true);
 		startupOnFinishLabel.show;
 	end;
