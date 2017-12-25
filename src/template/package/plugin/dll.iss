@@ -93,3 +93,23 @@ function WebPageAction(hWndWeb: HWND; action: DWord): Boolean; external 'webpage
 //圆角
 function CreateRoundRectRgn(p1, p2, p3, p4, p5, p6: Integer): THandle; external 'CreateRoundRectRgn@gdi32 stdcall';
 function SetWindowRgn(hWnd: HWND; hRgn: THandle; bRedraw: Boolean): Integer; external 'SetWindowRgn@user32 stdcall';
+
+// 创建 Gif 窗口
+function NewGifbWnd(hWndParent: HWND; X, Y, nWidth, nHeight: Integer): HWND; external 'newgifwnd@gifctrl.dll stdcall';
+
+// 释放 Gif 窗口
+function FreeGifWnd(hWndGif: HWND): Boolean; external 'freegifwnd@gifctrl.dll stdcall';
+
+// 设置 Gif 窗口的父窗口
+function GifWndSetParent(hWndGif: HWND; hWndParent: HWND): Boolean; external 'gifwndsetparent@gifctrl.dll stdcall';
+
+// 设置 Gif 窗口的位置大小
+function GifWndSetBounds(hWndGif: HWND; X, Y, nWidth, nHeight: Integer): Boolean; external 'gifwndsetbounds@gifctrl.dll stdcall';
+
+// 载入图片，并设置图片显示位置
+function GifWndLoadFromFile(hWndGif: HWND; HAlign, VAlign: Integer; BGColor: DWord; Fit: integer; GifFileName: PAnsiChar): Boolean; external 'gifwndloadfromfile@gifctrl.dll stdcall';
+// 第1 次载入需要指定图片文件“GifFileName”，然后在需要重新载入另外图片的时候重新指定另外的图片文件，重新调整 Align 位置时也需要调用此函数，
+// 但是如果只是为了调整 Align 而不想重新载入一次 GifFileName 文件，只需要把 GifFileName 设置为空字符串就可以达到只调整位置，不重载文件。
+
+// 释放所有 Gif 窗口
+function FreeAllGifWnd(): Boolean; external 'freeallgifwnd@gifctrl.dll stdcall';

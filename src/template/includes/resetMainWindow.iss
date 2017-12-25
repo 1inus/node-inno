@@ -7,7 +7,6 @@ var Minimize, CloseBtn: HWND; //close btn
 	htmlAdBar: HWND;
 	adPage: TWizardPage;
 
-
 //拖动窗口
 procedure WizardFormMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
@@ -40,6 +39,7 @@ begin
 end;
 
 procedure resetMainWindow();
+
 begin
 	IsFrameDragging := false;
 	mainFrame:=TForm.Create(nil);;
@@ -97,7 +97,7 @@ begin
 		htmlAdBar := NewWebWnd(WizardForm.Handle, {{ui.htmlAdBar.left}}, {{ui.htmlAdBar.top}}, {{ui.htmlAdBar.width}}, {{ui.htmlAdBar.height}});
 		DisplayHTMLPage(htmlAdBar, ExpandConstant('{tmp}\adBar.html'));
 	end;
-
+	
 	mainFrame.show;
 end;
 

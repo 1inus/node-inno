@@ -1,5 +1,3 @@
-import { encode } from "punycode";
-
 let path = require("path");
 let fs = require("fs-extra");
 let os = require('os');
