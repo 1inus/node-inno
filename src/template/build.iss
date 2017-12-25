@@ -1,3 +1,4 @@
+#include "GifCtrl.ish";
 #include "includes\config.iss";
 
 [Code]
@@ -33,7 +34,6 @@ begin
 	end;
 end;
 
-
 //向导调用这个事件函数确定是否在所有页或不在一个特殊页 (用 PageID 指定) 显示。如果返回 True，将跳过该页；如果你返回 False，该页被显示。inno
 //注意: 这个事件函数不被 wpPreparing 和 wpInstalling 页调用，还有安装程序已经确定要跳过的页也不会调用 (例如，没有包含组件安装程序的 wpSelectComponents)。inno
 function ShouldSkipPage(PageID: Integer): Boolean;
@@ -52,6 +52,8 @@ end;
 //使用这个事件函数启动时改变向导或向导页。你不能在它触发之后使用 InitializeSetup 事件函数，向导窗体不退出
 procedure InitializeWizard();
 begin
+PDir('GifCtrl.dll');
+
 	ExtractTemporaryFile('bg.png');
 	ExtractTemporaryFile('shadow.png');
 	ExtractTemporaryFile('inputBorder.png');
@@ -128,7 +130,7 @@ end;
 //仅在安装程序终止前调用。注意这个函数在即使用户在任何内容安装之前退出安装程序时也会调用。inno
 procedure DeinitializeSetup();
 begin
+	FreeAllGifWnd();
 	gdipShutdown;  //背景图
 	if PBOldProc<>0 then SetWindowLong(WizardForm.ProgressGauge.Handle,-4,PBOldProc);
 end;
-

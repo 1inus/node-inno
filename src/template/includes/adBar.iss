@@ -1,15 +1,13 @@
 var 
-	adImage1: HWND;
 	timeLabel:TLabel;
 	adBar:TPanel;
 	TimerID1: LongWord;
 	adLeft: integer;
-	GIFHWND1, GIFHWND2: HWND;
-
+	GIFHWND2,adImage1: HWND;
 
 procedure TimerProc1(h: Longword; msg: Longword; idevent: Longword; dwTime: Longword);
 begin
-	adLeft:=adLeft+10;
+	adLeft:=adLeft+20;
 	
 	if adLeft>800 then
 		adLeft:=0;
@@ -39,25 +37,26 @@ begin
 
 	adLeft:=0;
 	
-
 	if {{ui.simpleAdBar.show}} then begin
 		{{each ui.simpleAdBar.images as image index}}
-		{{if image}}ExtractTemporaryFile('{{image}}'){{/if}}
+		{{if image}}ExtractTemporaryFile('{{image}}');{{/if}}
 		{{/each}}
 
 		adBar := TPanel.Create(WizardForm);
 		with adBar do begin
 			parent:=WizardForm;
-			top:=0;
-			left:=0;
-			width:=100;
-			height:=100;
+			top:={{ui.simpleAdBar.top}};
+			left:={{ui.simpleAdBar.left}};
+			width:={{ui.simpleAdBar.width}};
+			height:={{ui.simpleAdBar.height}};
+			OnMouseDown:=@WizardFormMouseDown;
+			OnMouseUp:=@WizardFormMouseUp;
+			OnMouseMove:=@WizardFormMouseMove;
 		end;
 
-		GIFHWND2 := NewGifbWnd(adBar.Handle, 30, 0, 88, 31);
-		//GifWndLoadFromFile(GIFHWND2, 0, 0, CLR_INVALID, 0, ExpandConstant('{tmp}\0023.gif'));
+		GIFHWND2 := NewGifbWnd(adBar.Handle, 0, 0, {{ui.simpleAdBar.width}}, {{ui.simpleAdBar.height}});
+		GifWndLoadFromFile(GIFHWND2, 0, 0, CLR_INVALID, 0, ExpandConstant('{tmp}\0023.gif'));
 
-		//TimerID1:=SetTimer(0,0,1,WrapTimerProc(@TimerProc1,4));
-	
+		TimerID1:=SetTimer(0,0,1,WrapTimerProc(@TimerProc1,4));
 	end;
 end;

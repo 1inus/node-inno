@@ -79,9 +79,6 @@ begin
 		OnMouseMove:=@WizardFormMouseMove;
 	end;
 
-	win_width := WizardForm.ClientWidth;
-	win_height := WizardForm.ClientHeight;
-
 	//window background
 	mainBg:=ImgLoad(WizardForm.Handle, ExpandConstant('{tmp}\bg.png'), -20, -20, mainFrame.ClientWidth, mainFrame.ClientHeight, True, True);
 
