@@ -8,13 +8,6 @@
 #define appPublisher 			"{{app.publisher}}"
 
 #define fontName 				"{{ui.fontName}}"
-#define textLicense 			"{{ui.textLicense}}"
-#define textAgreeLicense 		"{{ui.textAgreeLicense}}"
-#define textCancleInstall 		"{{ui.textCancleInstall}}"
-#define textCreateShortcut 		"{{ui.textCreateShortcut}}"
-#define textStartupOnFinish 	"{{ui.textStartupOnFinish}}"
-#define textStartupOnBootstrap 	"{{ui.textStartupOnBootstrap}}"
-#define textCancleInstallMsgbox "{{ui.textCancleInstallMsgbox}}"
 
 [Setup]
 AppName					= {#appName}

@@ -1,42 +1,127 @@
 {
 	"buildScript": "",
+	"installDetail": {
+		"createShortcut": true,
+		"startupOnFinish": true,
+		"startupOnBootstrap": true,
+		"agreeLicense": true,
+		"installPath": "",
+		"defaultInstallDir": "{pf}",
+		"installerOutputDir": "C:/Users/cnlia/Desktop"
+	},
+	"registry": [
+		{
+			"root": "HKCR",
+			"subkey": "workplusProtocol\\DefaultIcon",
+			"type": "string",
+			"name": "URL Qiaoker Protocol",
+			"value": "{app}\\WorkPlus.exe",
+			"flags": "CreateValueIfDoesntExist"
+		},
+		{
+			"root": "HKCR",
+			"subkey": "workplusProtocol\\shell\\open\\command",
+			"type": "string",
+			"name": "URL Qiaoker Protocol",
+			"value": "{app}\\WorkPlus.exe \"\"%1\"\"",
+			"flags": "CreateValueIfDoesntExist"
+		}
+	],
+	"app": {
+		"id": "TakeColor 1.0.0",
+		"name": "TakeColor",
+		"version": "",
+		"publisher": "htgk",
+		"url": "",
+		"comments": "myapp_installer",
+		"exe": "build/app/TakeColor.exe",
+		"package": "build/app/*"
+	},
 	"ui": {
 		"encoding": "gbk",
 		"fontName": "Microsoft YaHei",
+		"clientWidth": 800,
+		"clientHeight": 500,
+		"htmlAdBar": {
+			"top": 0,
+			"left": 0,
+			"width": 800,
+			"height": 350,
+			"show": false
+		},
+		"simpleAdBar": {
+			"images": [
+				"ad1.jpg",
+				"ad2.jpg",
+				"ad3.jpg"
+			],
+			"interval": 5000,
+			"top": 0,
+			"left": 0,
+			"width": 800,
+			"height": 350,
+			"timeInterval": 3000,
+			"show": true
+		},
 		"licenseText": {
 			"text": "许可协议",
-			"top": 12,
-			"left": 12,
+			"top": 478,
+			"left": 172,
+			"color": "FF8833",
 			"show": true
 		},
 		"moreOptions": {
 			"text": "更多安装选项",
 			"top": 12,
 			"left": 12,
-			"show": true
+			"show": true,
+			"color": "000000"
 		},
 		"licenseCheckbox": {
-			"text": "已经阅读,并同意",
-			"top": 12,
-			"left": 12,
-			"show": true
+			"text": "已经阅读",
+			"top": 478,
+			"left": 91,
+			"checked": true,
+			"show": true,
+			"color": "000000"
 		},
 		"createShortcutCheckbox": {
 			"text": "创建桌面快捷方式",
-			"top": 12,
-			"left": 12,
-			"show": true
+			"top": 478,
+			"left": 465,
+			"checked": true,
+			"show": true,
+			"color": "000000"
 		},
 		"startupOnFinishCheckbox": {
 			"text": "立即运行程序",
-			"top": 12,
-			"left": 12,
+			"top": 478,
+			"left": 352,
+			"checked": true,
+			"show": true,
+			"color": "000000"
+		},
+		"startupOnBootstrapCheckbox": {
+			"text": "开机启动",
+			"top": 478,
+			"left": 253,
+			"checked": true,
+			"show": true,
+			"color": "000000"
+		},
+		"installDirInput": {
+			"top": 429,
+			"left": 154,
+			"height": 35,
+			"width": 400,
+			"color": "000000",
 			"show": true
 		},
-		"StartupOnBootstrapCheckbox": {
-			"text": "开机启动",
-			"top": 12,
-			"left": 12,
+		"installDirBrowserButton": {
+			"top": 429,
+			"left": 553,
+			"height": 35,
+			"width": 80,
 			"show": true
 		},
 		"cancleInstallMsgbox": {
@@ -44,68 +129,56 @@
 			"show": true
 		},
 		"progressBar": {
-			"top": 12,
-			"left": 12,
-			"width": 400,
+			"top": 435,
+			"left": 50,
+			"width": 700,
 			"height": 20,
 			"show": true
 		},
 		"progressText": {
-			"top": 12,
-			"left": 12,
-			"width": 400,
+			"top": 390,
+			"left": 0,
+			"width": 800,
+			"height": 30,
+			"color": "E78E0E",
 			"show": true
 		},
 		"installButton": {
-			"top": 12,
-			"left": 12,
+			"top": 365,
+			"left": 274,
 			"width": 230,
 			"height": 50,
 			"show": true
 		},
+		"finishText": {
+			"text": "安装完毕",
+			"top": 385,
+			"left": 0,
+			"width": 800,
+			"height": 30,
+			"color": "20ad11",
+			"show": true
+		},
 		"finishButton": {
-			"top": 12,
-			"left": 12,
-			"width": 230,
+			"top": 428,
+			"left": 275,
+			"width": 250,
 			"height": 50,
 			"show": true
 		},
 		"minimizeButton": {
-			"top": 12,
-			"left": 12,
-			"width": 230,
-			"height": 50,
+			"top": 4,
+			"left": 755,
+			"width": 16,
+			"height": 16,
+			"show": true
+		},
+		"closeButton": {
+			"top": 4,
+			"left": 779,
+			"width": 16,
+			"height": 16,
 			"show": true
 		}
-	},
-	"installDetail": {
-		"installPath": "",
-		"agreeLicense": true,
-		"createShortcut": true,
-		"startupOnFinish": true,
-		"installerOutputDir": ".",
-		"startupOnBootstrap": true,
-		"defaultInstallDir": "{pf}",
-		"uninstallBeforeInstall": true
-	},
-	"registry": [
-		{
-			"root": "",
-			"subkey": "",
-			"type": "",
-			"name": "",
-			"value": "",
-			"flags": ""
-		}
-	],
-	"app": {
-		"id": "myapp_id",
-		"name": "myapp",
-		"version": "1.0.0",
-		"publisher": "htgk",
-		"url": "",
-		"comments": "myapp_installer",
-		"exe": "bulid/app/app.exe",
-		"package": "bulid/app/*"
 	}
 }

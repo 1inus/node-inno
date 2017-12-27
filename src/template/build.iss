@@ -54,6 +54,7 @@ begin
 
 	ExtractTemporaryFile('bg.png');
 	ExtractTemporaryFile('shadow.png');
+	ExtractTemporaryFile('dots.png');
 	ExtractTemporaryFile('inputBorder.png');
 	ExtractTemporaryFile('minimizeBtn.png');
 	ExtractTemporaryFile('closeBtn.png');
