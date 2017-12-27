@@ -26,8 +26,6 @@ begin
   if IsFrameDragging then begin
     WizardForm.Left:=WizardForm.Left+X-dx;
     WizardForm.Top:=WizardForm.Top+Y-dy;
-    mainFrame.Left:=WizardForm.Left-20;
-    mainFrame.Top:=WizardForm.Top-20;
   end;
 end;
 
@@ -42,21 +40,6 @@ procedure resetMainWindow();
 
 begin
 	IsFrameDragging := false;
-	mainFrame:=TForm.Create(nil);;
-	mainFrame.BorderStyle:=bsNone;
-	CreateFormFromImage(mainFrame.Handle,ExpandConstant('{tmp}\shadow.png'));
-
-	with TLabel.Create(mainFrame) do begin
-		Parent:=mainFrame;
-		AutoSize:=false;
-		Left:=0;
-		Top:=0;
-		Width:=mainFrame.CLientWidth;
-		Height:=mainFrame.ClientHeight;
-		OnMouseDown:=@WizardFormMouseDown;
-		OnMouseUp:=@WizardFormMouseUp;
-		OnMouseMove:=@WizardFormMouseMove;
-	end;
 
 	//beautify window
 	with WizardForm do begin
@@ -66,11 +49,9 @@ begin
 		OuterNotebook.Hide;
 		AutoScroll := False;
 		BorderStyle:=bsNone;
-		ClientWidth:=mainFrame.ClientWidth-40;
-		ClientHeight:=mainFrame.ClientHeight-40;
+		ClientWidth:={{ui.clientWidth}};
+		ClientHeight:={{ui.clientHeight}};
 		Color:=TransparentColor;
-		left:=mainFrame.Left+20;
-		top:=mainFrame.Top+20;
 		NextButton.Width:=0;
 		BackButton.Width:=0;
 		CancelButton.Width:=0;
@@ -79,8 +60,12 @@ begin
 		OnMouseMove:=@WizardFormMouseMove;
 	end;
 
+	InitFairy(WizardForm.Handle, 0, 20 );
+	AddImgToList(-20, -20, 255, clNone, ExpandConstant('{tmp}\shadow.png'))
+	ShowFairyEx(0);
+
 	//window background
-	mainBg:=ImgLoad(WizardForm.Handle, ExpandConstant('{tmp}\bg.png'), -20, -20, mainFrame.ClientWidth, mainFrame.ClientHeight, True, True);
+	mainBg:=ImgLoad(WizardForm.Handle, ExpandConstant('{tmp}\bg.png'), 0, 0, WizardForm.ClientWidth, WizardForm.ClientHeight, True, True);
 
 	//minimize btn
 	Minimize:=BtnCreate(WizardForm.Handle, {{ui.minimizeButton.left}}, {{ui.minimizeButton.top}}, {{ui.minimizeButton.width}}, {{ui.minimizeButton.height}}, ExpandConstant('{tmp}\minimizeBtn.png'), 3, False);
@@ -89,13 +74,6 @@ begin
 	//close btn
 	CloseBtn:=BtnCreate(WizardForm.Handle, {{ui.closeButton.left}}, {{ui.closeButton.top}}, {{ui.closeButton.width}}, {{ui.closeButton.height}}, ExpandConstant('{tmp}\closeBtn.png'), 3, False);
 	BtnSetEvent(CloseBtn, BtnClickEventID, WrapBtnCallback(@CloseBtnOnClick, 1));
-
-	if {{ui.htmlAdBar.show}} then begin
-		htmlAdBar := NewWebWnd(WizardForm.Handle, {{ui.htmlAdBar.left}}, {{ui.htmlAdBar.top}}, {{ui.htmlAdBar.width}}, {{ui.htmlAdBar.height}});
-		DisplayHTMLPage(htmlAdBar, ExpandConstant('{tmp}\adBar.html'));
-	end;
-	
-	mainFrame.show;
 end;
 
 procedure setEnableCloseBtn(isEnabled:Boolean);

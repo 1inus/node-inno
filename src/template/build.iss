@@ -8,8 +8,6 @@ var
 	installStep : Longint;
 	progressPanel: TPanel; //主要面板
 
-	mainFrame : TForm;
-
 	//百分比
 	PBOldProc : Longint;
 	
@@ -52,7 +50,7 @@ end;
 //使用这个事件函数启动时改变向导或向导页。你不能在它触发之后使用 InitializeSetup 事件函数，向导窗体不退出
 procedure InitializeWizard();
 begin
-PDir('GifCtrl.dll');
+	PDir('GifCtrl.dll');
 
 	ExtractTemporaryFile('bg.png');
 	ExtractTemporaryFile('shadow.png');
