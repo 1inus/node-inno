@@ -32,7 +32,7 @@
 		"name": "TakeColor",
 		"version": "",
 		"publisher": "htgk",
-		"url": "",
+		"mainPage": "",
 		"comments": "myapp_installer",
 		"exe": "build/app/TakeColor.exe",
 		"package": "build/app/*"
