@@ -28,7 +28,7 @@ begin
 		i1:=WizardForm.ProgressGauge.Position-WizardForm.ProgressGauge.Min;
 		i2:=WizardForm.ProgressGauge.Max-WizardForm.ProgressGauge.Min;
 		pr:=i1*100/i2;
-		setProgressWidth(Round(pr));
+		setProgressWidth(pr);
 	end;
 end;
 
@@ -115,7 +115,7 @@ begin
 		hideProgressPanel;
 		showFinishedPanel;
 		if BtnGetChecked(startupOnFinishBtn) = true then begin
-			Exec(ExpandConstant('{app}\{#appName}' + '.exe'), '', '', SW_SHOW, ewNoWait, RCode);
+			Exec(ExpandConstant('{app}\{#exeName}'), '', '', SW_SHOW, ewNoWait, RCode);
 			WizardForm.NextButton.Click;
 		end else begin
 			showFinishedPanel;

@@ -14,7 +14,7 @@ const
 
 procedure adTimerProc(h: Longword; msg: Longword; idevent: Longword; dwTime: Longword);
 begin
-	adOpacity := adOpacity+24;
+	adOpacity := adOpacity+10;
 
 	if adOpacity > 255 then begin
 		preAdImageIndex := curAdImageIndex;
@@ -37,6 +37,12 @@ begin
 	BtnSetEnabled(hBtn, false);
 	BtnSetEnabled(preAdImageBtn, true);
 
+	//立即完成上一次的轮播，为下一次轮播初始化环境
+	KillTimer(0, adSwitchTimer);
+	ImgSetTransparent(adImageGroup[preAdImageIndex], 0);
+	ImgSetVisibility(adImageGroup[preAdImageIndex], false);
+	ImgSetTransparent(adImageGroup[curAdImageIndex], 255);
+
 	preAdImageBtn := hBtn;
 
 	for i:=0 to adImageNumber do begin
@@ -44,6 +50,7 @@ begin
 			curAdImageIndex := i;
 		end;
 	end;
+	ImgSetVisibility(adImageGroup[curAdImageIndex], true);
 
 	adOpacity := 0;
 	adSwitchTimer:=SetTimer(0, 0, 1, WrapTimerProc(@adTimerProc,5));
@@ -76,8 +83,9 @@ begin
 		{{if image}}ExtractTemporaryFile('{{image}}');{{/if}}
 		{{/each}}
 
+		//定位广告导航栏
 		dotsTop := {{ui.simpleAdBar.top}}+{{ui.simpleAdBar.height}}-40;
-		dotsLeft := {{ui.simpleAdBar.left}}+{{ui.simpleAdBar.width}} div 2 - (30*adImageNumber*2 - 30) div 2;
+		dotsLeft := {{ui.simpleAdBar.left}}+({{ui.simpleAdBar.width}} div 2) - ((30*adImageNumber) div 2);
 
 		{{each ui.simpleAdBar.images as image index}}
 		adImageGroup[{{index}}] := ImgLoad(WizardForm.Handle, ExpandConstant('{tmp}\{{image}}'),{{ui.simpleAdBar.left}},{{ui.simpleAdBar.top}},{{ui.simpleAdBar.width}},{{ui.simpleAdBar.height}},True,True);

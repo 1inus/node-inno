@@ -36,12 +36,14 @@
                 return false;
             }
             let nodeInnoBase = __dirname;
-            let targetJson, targetJsonPath = path.join(pakage["node-inno-build"], "build.json") || "build/build.json";
+            let targetJson, targetJsonPath = pakage["node-inno-build"] ? path.join(pakage["node-inno-build"], "build.json") : "build/build.json";
             try {
+                console.log(targetJsonPath);
                 targetJson = fs.readJsonSync(path.join(process.cwd(), targetJsonPath), { throws: false });
             }
             catch (e) {
                 console.log(this.colorRed, `error: ${path.join(process.cwd(), targetJsonPath)} not found.`);
+                return false;
             }
             let defaultJson = fs.readJsonSync(path.join(nodeInnoBase, "template/build.json"), { throws: false });
             let defaultJsonString = fs.readFileSync(path.join(nodeInnoBase, "template/build.json"));
@@ -62,7 +64,7 @@
                 console.log(this.colorYellow, defaultJsonString);
                 return false;
             }
-            let buildTempRoot = path.join(os.homedir(), "Desktop/node-inno");
+            let buildTempRoot = path.join(os.tmpdir(), "node-inno");
             console.log(this.colorYellow, '\ndefault config :');
             console.log(this.colorYellow, JSON.stringify(defaultJson, null, 4));
             targetJson.registry = targetJson.registry || [];
@@ -91,11 +93,11 @@
             }
             targetJson.installDetail.defaultInstallDir = targetJson.installDetail.defaultInstallDir || `{pf}`;
             if (!targetJson.app.exe) {
-                console.error(this.colorRed, `× "${targetJson.app.exe}" required ×`);
+                console.error(this.colorRed, `× "${targetJson.app.exe}" required`);
                 return false;
             }
             if (!targetJson.app.package) {
-                console.error(this.colorRed, `× "${targetJson.app.package}" required ×`);
+                console.error(this.colorRed, `× "${targetJson.app.package}" required`);
                 return false;
             }
             if (!fs.existsSync(targetJson.app.exe)) {
@@ -113,6 +115,7 @@
                 let template = require('art-template');
                 try {
                     fs.copySync(path.join(nodeInnoBase, "template/package"), buildTempRoot);
+                    targetJson.app.exeName = path.basename(targetJson.app.exe);
                     let scripts = [
                         "adBar.iss",
                         "common.iss",

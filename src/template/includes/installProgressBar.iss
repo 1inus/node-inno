@@ -44,9 +44,9 @@ begin
 end;
 
 //percentage
-procedure setProgressWidth(progressWidth:Longint);
+procedure setProgressWidth(progressWidth:Extended);
 begin
-	progressLabel.Caption:=IntToStr(progressWidth)+'%';
-	ImgSetPosition(progressBar, {{ui.progressBar.left}}, {{ui.progressBar.top}}, {{ui.progressBar.width}}*progressWidth/100, {{ui.progressBar.height}});
+	progressLabel.Caption:=IntToStr(Round(progressWidth))+'%';
+	ImgSetPosition(progressBar, {{ui.progressBar.left}}, {{ui.progressBar.top}}, Round({{ui.progressBar.width}}*progressWidth/100), {{ui.progressBar.height}});
     ImgApplyChanges(WizardForm.Handle);
 end;

@@ -6,7 +6,7 @@ var
 procedure RunApp(hBtn:HWND);
 var RCode: Integer;
 begin
-	Exec(ExpandConstant('{app}\{#appName}' + '.exe'), '', '', SW_SHOW, ewNoWait, RCode);
+	Exec(ExpandConstant('{app}\{#exeName}'), '', '', SW_SHOW, ewNoWait, RCode);
 	WizardForm.NextButton.Click;
 end;
 
@@ -33,8 +33,6 @@ begin
 		Font.Color:=${{ui.finishText.color}};
 		Font.Size:= {{ui.finishText.height}}-12;
 		OnMouseDown:=@WizardFormMouseDown;
-		OnMouseUp:=@WizardFormMouseUp;
-		OnMouseMove:=@WizardFormMouseMove;
 		hide;
 	end;
 end;

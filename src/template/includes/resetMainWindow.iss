@@ -1,8 +1,6 @@
 var Minimize, CloseBtn: HWND; //close btn
 	mainBg : Longint; //bg image
 	win_Width, win_Height : Longint;
-	IsFrameDragging : boolean;
-	dx,dy,dh1 : integer;
 
 	htmlAdBar: HWND;
 	adPage: TWizardPage;
@@ -10,37 +8,13 @@ var Minimize, CloseBtn: HWND; //close btn
 //拖动窗口
 procedure WizardFormMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
-  IsFrameDragging:=True;
-  dx:=X;
-  dy:=Y;
-end;
-
-procedure WizardFormMouseUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-begin
-  IsFrameDragging:=False;
-  WizardForm.Show;
-end;
-
-procedure WizardFormMouseMove(Sender: TObject; Shift: TShiftState; X,Y: Integer);
-begin
-  if IsFrameDragging then begin
-    WizardForm.Left:=WizardForm.Left+X-dx;
-    WizardForm.Top:=WizardForm.Top+Y-dy;
-  end;
-end;
-
-procedure WizardFormcc;
-begin
-    WizardForm.OnMouseDown:=@WizardFormMouseDown;
-    WizardForm.OnMouseUp:=@WizardFormMouseUp;
-    WizardForm.OnMouseMove:=@WizardFormMouseMove;
+	ReleaseCapture
+	SendMessage(WizardForm.Handle, WM_SYSCOMMAND, $F012, 0);
 end;
 
 procedure resetMainWindow();
 
 begin
-	IsFrameDragging := false;
-
 	//beautify window
 	with WizardForm do begin
 		Center;
@@ -56,8 +30,6 @@ begin
 		BackButton.Width:=0;
 		CancelButton.Width:=0;
 		OnMouseDown:=@WizardFormMouseDown;
-		OnMouseUp:=@WizardFormMouseUp;
-		OnMouseMove:=@WizardFormMouseMove;
 	end;
 
 	InitFairy(WizardForm.Handle, 0, 20 );

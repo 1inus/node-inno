@@ -6,6 +6,7 @@
 #define appVersion 				"{{app.version}}"
 #define MyComments 				"{{app.comments}}"
 #define appPublisher 			"{{app.publisher}}"
+#define exeName 				"{{app.exeName}}"
 
 #define fontName 				"{{ui.fontName}}"
 
@@ -38,7 +39,7 @@ AllowNoIcons			= yes
 DisableReadyPage		= yes
 DisableProgramGroupPage	= yes
 
-SetupIconFile			= "inno-resource\install.ico"
+SetupIconFile			= "inno-resource\installer.ico"
 UninstallDisplayIcon	= "inno-resource\uninstall.ico"
 
 //use preview
@@ -53,11 +54,11 @@ UsePreviousUserInfo		= yes
 Name: "startupicon"; Description: "{#appName} startupOnBootstrap"; GroupDescription: "{cm:AdditionalIcons}";
 
 [Icons]
-Name: "{group}\{#appName}"; Filename: "{app}\{#appName}.exe"; WorkingDir: "{app}";
+Name: "{group}\{#appName}"; Filename: "{app}\{#exeName}"; WorkingDir: "{app}";
 Name: "{group}\{cm:UninstallProgram,{#appName}}"; Filename: "{uninstallexe}"; WorkingDir: "{app}";
-Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#appName}"; Filename: "{app}\{#appName}.exe"; WorkingDir: "{app}";
+Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#appName}"; Filename: "{app}\{#exeName}"; WorkingDir: "{app}";
 
-Name: "{userdesktop}\{#appName}"; Filename: "{app}\{#appName}.exe"; Check: DesktopCheckClick;
+Name: "{userdesktop}\{#appName}"; Filename: "{app}\{#exeName}"; Check: DesktopCheckClick;
 
 [Registry] 
 Root: HKLM; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\Run"; ValueType:string; ValueName:"{#appName}"; ValueData: "{app}\{#appName}"
