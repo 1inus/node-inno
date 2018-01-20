@@ -1,6 +1,6 @@
 #include '..\plugin\dll.iss'
 
-#define appURL 					"{{app.url}}"
+#define appURL 					"{{app.mainPage}}"
 #define MyAppId 				"{{app.id}}"
 #define appName 				"{{app.name}}"
 #define appVersion 				"{{app.version}}"
