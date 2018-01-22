@@ -50,11 +50,7 @@
 			"show": false
 		},
 		"simpleAdBar": {
-			"images": [
-				"ad1.jpg",
-				"ad2.jpg",
-				"ad3.jpg"
-			],
+			"images": [],
 			"interval": 5000,
 			"top": 0,
 			"left": 0,
