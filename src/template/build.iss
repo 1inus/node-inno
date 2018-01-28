@@ -1,4 +1,5 @@
 #include "GifCtrl.ish";
+#include "IssProc.Ish"
 #include "includes\config.iss";
 
 [Code]
@@ -52,6 +53,7 @@ begin
 	hideProgressPanel;
 end;
 #include "includes\uninstallBeforeInstall.iss";
+#include "includes\killTask.iss";
 
 //向导调用这个事件函数确定是否在所有页或不在一个特殊页 (用 PageID 指定) 显示。如果返回 True，将跳过该页；如果你返回 False，该页被显示。inno
 //注意: 这个事件函数不被 wpPreparing 和 wpInstalling 页调用，还有安装程序已经确定要跳过的页也不会调用 (例如，没有包含组件安装程序的 wpSelectComponents)。inno
@@ -89,6 +91,7 @@ begin
 	ExtractTemporaryFile('cancelBtn.png');
 	ExtractTemporaryFile('confirmUninstallBtn.png');
 	ExtractTemporaryFile('msgboxbg.bmp');
+	ExtractTemporaryFile('continueBtn.png');
 
 	with WizardForm do begin
 		Center;
@@ -103,8 +106,10 @@ begin
 		CancelButton.Width:=0;
 	end;
 	
-	if checkPreVersion() then begin
-		initInstallWindow;
+	if not checkRuningTask() then begin
+		if checkPreVersion() then begin
+			initInstallWindow;
+		end;
 	end;
 end;
 
@@ -131,6 +136,7 @@ begin
 	//wpInstalling = 12;
 	//wpInfoAfter = 13;
 	//wpFinished = 14;
+
 
 	//正在安装
 	if CurPageID = wpInstalling then begin
@@ -163,4 +169,10 @@ begin
 	FreeAllGifWnd();
 	gdipShutdown;  //背景图
 	if PBOldProc<>0 then SetWindowLong(WizardForm.ProgressGauge.Handle,-4,PBOldProc);
+end;
+
+function InitializeUninstall(): Boolean;
+begin
+  Result := True;
+  //Result := AutoIssProc(ExpandConstant('*{app}*'), 'chs', false, true);
 end;

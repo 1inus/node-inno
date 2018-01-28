@@ -150,7 +150,8 @@ export class NodeInno {
 					"installFinish.iss",
 					"installProgressBar.iss",
 					"resetMainWindow.iss",
-					"uninstallBeforeInstall.iss"
+					"uninstallBeforeInstall.iss",
+					"killTask.iss"
 				];
 
 				let renderer, tmp, encoding = targetJson.ui.encoding || "utf8";

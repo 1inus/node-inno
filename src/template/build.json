@@ -45,7 +45,14 @@
 		"clientWidth": 800,
 		"clientHeight": 500,
 		"uninstallMsgbox": {
-			"text": "检测到已经安装xxxxx，安装前是否卸载HTML DOM confirm()"
+			"text": "检测到已经安装xxxxx，安装前是否卸载HTML DOM confirm()",
+			"color":"000000",
+			"fontSize":16
+		},
+		"checkTaskMsgbox": {
+			"text": "检测到xxx正在运行，是否结束任务",
+			"color":"000000",
+			"fontSize":16
 		},
 		"htmlAdBar": {
 			"top": 0,

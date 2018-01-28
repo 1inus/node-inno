@@ -29,7 +29,7 @@ end;
 procedure cancelUninstallBeforeInstall(hBtn:HWND);
 var resultCode: Integer;
 begin
-	if not {{installDetail.requireUninstallBeforeInstall}} then begin
+	if {{installDetail.requireUninstallBeforeInstall}} then begin
 		WizardForm.Close;
 	end else begin
 		//卸载完毕初始化主窗体
@@ -75,6 +75,7 @@ begin
 			Width := ScaleX(400);
 			Height := ScaleY(250);
     		Bitmap.LoadFromFile(ExpandConstant('{tmp}\msgboxbg.bmp'));
+			OnMouseDown:=@WizardFormMouseDown;
 		end;
 
 		with TLabel.Create(uninstallBeforeInstallPabel) do begin
@@ -83,12 +84,13 @@ begin
 			AutoSize:=false;
 			Left := 30;
 			Top := 70;
-			Width := 340;
+			Width := 350;
 			Height := 100;
 			wordWrap:=true;
 			Transparent:=True;
 			Caption := '{{ui.uninstallMsgbox.text}}';
-			Font.Size := 16;
+			Font.Size := {{ui.uninstallMsgbox.fontSize}};
+			Font.Color := ${{ui.uninstallMsgbox.color}};
 			OnMouseDown:=@WizardFormMouseDown;
 		end;
 
