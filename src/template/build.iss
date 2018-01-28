@@ -10,15 +10,22 @@ var
 
 	//百分比
 	PBOldProc : Longint;
-	
+
+//拖动窗口
+procedure WizardFormMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+begin
+	ReleaseCapture
+	SendMessage(WizardForm.Handle, WM_SYSCOMMAND, $F012, 0);
+end;
+
 #include "includes\common.iss";
-#include "includes\resetMainWindow.iss";
 #include "includes\adBar.iss";
 #include "includes\installDetail.iss";
 #include "includes\installProgressBar.iss";
 #include "includes\installFinish.iss";
+#include "includes\resetMainWindow.iss";
 
-//百分比
+//百分比（安装进度）
 function PBProc(h:hWnd; Msg, wParam, lParam:Longint):Longint;
 var
 	pr,i1,i2 : Extended;
@@ -31,6 +38,20 @@ begin
 		setProgressWidth(pr);
 	end;
 end;
+
+procedure initInstallWindow();
+begin
+	initMainWindow;
+	initAdBar;
+	initDetailPanel;
+	createProgressPanel();
+	createFinishPanel();
+	installStep := wpWelcome;
+	PBOldProc:=SetWindowLong(WizardForm.ProgressGauge.Handle,-4,PBCallBack(@PBProc,4));
+	showDetailPanel;
+	hideProgressPanel;
+end;
+#include "includes\uninstallBeforeInstall.iss";
 
 //向导调用这个事件函数确定是否在所有页或不在一个特殊页 (用 PageID 指定) 显示。如果返回 True，将跳过该页；如果你返回 False，该页被显示。inno
 //注意: 这个事件函数不被 wpPreparing 和 wpInstalling 页调用，还有安装程序已经确定要跳过的页也不会调用 (例如，没有包含组件安装程序的 wpSelectComponents)。inno
@@ -45,7 +66,6 @@ begin
 	if PageID=wpSelectDir then
 		result := true;
 end;
-
 
 //使用这个事件函数启动时改变向导或向导页。你不能在它触发之后使用 InitializeSetup 事件函数，向导窗体不退出
 procedure InitializeWizard();
@@ -65,16 +85,27 @@ begin
 	ExtractTemporaryFile('license.html');
 	ExtractTemporaryFile('progress.png');
 	ExtractTemporaryFile('progressBg.png');
+	ExtractTemporaryFile('msgbox.png');
+	ExtractTemporaryFile('cancelBtn.png');
+	ExtractTemporaryFile('confirmUninstallBtn.png');
+	ExtractTemporaryFile('msgboxbg.bmp');
 
-	resetMainWindow;
-	initAdBar;
-	initDetailPanel;
-	createProgressPanel(0, 250, win_width, 150);
-	createFinishPanel(0, 250, 240, 60);
-	installStep := wpWelcome;
-	PBOldProc:=SetWindowLong(WizardForm.ProgressGauge.Handle,-4,PBCallBack(@PBProc,4));
-	showDetailPanel;
-	hideProgressPanel;
+	with WizardForm do begin
+		Center;
+		Bevel.Hide;
+		InnerNotebook.Hide;
+		OuterNotebook.Hide;
+		AutoScroll := False;
+		BorderStyle:=bsNone;
+		Color:=TransparentColor;
+		NextButton.Width:=0;
+		BackButton.Width:=0;
+		CancelButton.Width:=0;
+	end;
+	
+	if checkPreVersion() then begin
+		initInstallWindow;
+	end;
 end;
 
 //在这里是正在安装页面

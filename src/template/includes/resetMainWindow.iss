@@ -1,34 +1,17 @@
 var Minimize, CloseBtn: HWND; //close btn
 	mainBg : Longint; //bg image
-	win_Width, win_Height : Longint;
 
 	htmlAdBar: HWND;
 	adPage: TWizardPage;
 
-//拖动窗口
-procedure WizardFormMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
-begin
-	ReleaseCapture
-	SendMessage(WizardForm.Handle, WM_SYSCOMMAND, $F012, 0);
-end;
-
-procedure resetMainWindow();
-
+//重新设置窗口样式
+procedure initMainWindow();
 begin
 	//beautify window
 	with WizardForm do begin
-		Center;
-		Bevel.Hide;
-		InnerNotebook.Hide;
-		OuterNotebook.Hide;
-		AutoScroll := False;
-		BorderStyle:=bsNone;
 		ClientWidth:={{ui.clientWidth}};
 		ClientHeight:={{ui.clientHeight}};
-		Color:=TransparentColor;
-		NextButton.Width:=0;
-		BackButton.Width:=0;
-		CancelButton.Width:=0;
+		Center;
 		OnMouseDown:=@WizardFormMouseDown;
 	end;
 
@@ -46,14 +29,11 @@ begin
 	//close btn
 	CloseBtn:=BtnCreate(WizardForm.Handle, {{ui.closeButton.left}}, {{ui.closeButton.top}}, {{ui.closeButton.width}}, {{ui.closeButton.height}}, ExpandConstant('{tmp}\closeBtn.png'), 3, False);
 	BtnSetEvent(CloseBtn, BtnClickEventID, WrapBtnCallback(@CloseBtnOnClick, 1));
+
+	ImgApplyChanges(WizardForm.Handle);
 end;
 
 procedure setEnableCloseBtn(isEnabled:Boolean);
 begin
 	BtnSetEnabled(CloseBtn, isEnabled);
-end;
-
-procedure updateMainbg(imagePath:String);
-begin
-	
 end;

@@ -1,6 +1,5 @@
 procedure _checkboxLabelClick(Sender: TObject);
 var btnId : HWND;
-
 begin
 	btnId := TLabel(Sender).Tag;
 	BtnSetChecked(btnId, not BtnGetChecked(btnId));

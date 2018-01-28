@@ -124,7 +124,8 @@
                         "installDetail.iss",
                         "installFinish.iss",
                         "installProgressBar.iss",
-                        "resetMainWindow.iss"
+                        "resetMainWindow.iss",
+                        "uninstallBeforeInstall.iss"
                     ];
                     let renderer, tmp, encoding = targetJson.ui.encoding || "utf8";
                     fs.ensureDirSync(path.join(buildTempRoot, "includes"));

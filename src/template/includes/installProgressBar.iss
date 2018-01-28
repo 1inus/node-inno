@@ -2,7 +2,7 @@ var
 	progressBar, progressBarBg: Longint;
 	progressLabel:TLabel;
 
-procedure createProgressPanel(panelLeft, panelTop, panelWidth, panelHeight:Longint);
+procedure createProgressPanel();
 begin
 	//progress bar
 	progressLabel:=TLabel.Create(WizardForm);

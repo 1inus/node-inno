@@ -6,6 +6,8 @@
 		"startupOnBootstrap": true,
 		"agreeLicense": true,
 		"installPath": "",
+		"checkUninstallBeforeInstall":true,
+		"requireUninstallBeforeInstall":false,
 		"defaultInstallDir": "{pf}",
 		"installerOutputDir": "C:/Users/cnlia/Desktop"
 	},
@@ -42,6 +44,9 @@
 		"fontName": "Microsoft YaHei",
 		"clientWidth": 800,
 		"clientHeight": 500,
+		"uninstallMsgbox": {
+			"text": "检测到已经安装xxxxx，安装前是否卸载HTML DOM confirm()"
+		},
 		"htmlAdBar": {
 			"top": 0,
 			"left": 0,

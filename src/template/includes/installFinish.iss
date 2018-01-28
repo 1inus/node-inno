@@ -11,7 +11,7 @@ begin
 end;
 
 //初始化正在安装中界面
-procedure createFinishPanel(panelLeft, panelTop, btnWidth, btnHeight:Longint);
+procedure createFinishPanel();
 var btnLeft, btnTop:Longint;
 begin
 	finishedBtn:=BtnCreate(WizardForm.Handle, {{ui.finishButton.left}}, {{ui.finishButton.top}}, {{ui.finishButton.width}}, {{ui.finishButton.height}}, ExpandConstant('{tmp}\startAppBtn.png'), 3, False);
