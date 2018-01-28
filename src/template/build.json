@@ -73,7 +73,7 @@
 		},
 		"licenseText": {
 			"text": "许可协议",
-			"top": 478,
+			"top": 482,
 			"left": 172,
 			"color": "FF8833",
 			"show": true
@@ -123,7 +123,9 @@
 			"height": 35,
 			"width": 400,
 			"color": "000000",
-			"show": true
+			"show": true,
+			"fontSize":14,
+			"enabled":false
 		},
 		"installDirBrowserButton": {
 			"top": 429,

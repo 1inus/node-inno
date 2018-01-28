@@ -33,6 +33,14 @@ end;
 
 //change install dir
 procedure browseButtonClick(hBtn:HWND);
+var inputOffsetY:Integer;
+begin
+	WizardForm.DirBrowseButton.Click;
+	installPath.Text := WizardForm.DirEdit.Text;
+end;
+
+procedure browseInputClick(Sender: TObject);
+var inputOffsetY:Integer;
 begin
 	WizardForm.DirBrowseButton.Click;
 	installPath.Text := WizardForm.DirEdit.Text;
@@ -65,6 +73,7 @@ end;
 
 //初始化安装细节配置
 procedure initDetailPanel();
+var inputOffsetY:Integer;
 begin
 	//install button
 	installBtn:=BtnCreate(WizardForm.Handle, {{ui.installButton.left}}, {{ui.installButton.top}}, {{ui.installButton.width}}, {{ui.installButton.height}}, ExpandConstant('{tmp}\installBtn.png'), 3, False);
@@ -78,16 +87,20 @@ begin
 			AutoSize:=false;
 			Parent := WizardForm;
 			Left := {{ui.installDirInput.left}}+8;
-			Top := {{ui.installDirInput.top}}+6;
 			Width := {{ui.installDirInput.width}}-16;
-			Height := {{ui.installDirInput.height}}-12;
-			Font.Size := {{ui.installDirInput.height}}-22;
+			Font.Size := {{ui.installDirInput.fontSize}};
 			Font.Name := fontName;
 			Font.Color:=${{ui.installDirInput.color}};
 			BorderStyle := bsNone;
 			Text := WizardForm.DirEdit.Text;
 			OnChange := @inputInstallPath;
+			enabled:={{ui.installDirInput.enabled}};
+			//OnClick:=@browseInputClick;
 		end;
+
+		inputOffsetY := Round(({{ui.installDirInput.height}} - installPath.Height) div 2);
+		installPath.top := {{ui.installDirInput.top}}+inputOffsetY;
+
 		browerBtn:=BtnCreate(WizardForm.Handle, {{ui.installDirBrowserButton.left}}, {{ui.installDirBrowserButton.top}}, {{ui.installDirBrowserButton.width}}, {{ui.installDirBrowserButton.height}}, ExpandConstant('{tmp}\browserBtn.png'), 3, False);
 		BtnSetEvent(browerBtn, BtnClickEventID, WrapBtnCallback(@browseButtonClick, 1));
 		inputBorder:=ImgLoad(WizardForm.Handle, ExpandConstant('{tmp}\inputBorder.png'), {{ui.installDirInput.left}}, {{ui.installDirInput.top}}, {{ui.installDirInput.width}}, {{ui.installDirInput.height}}, True, True);
