@@ -173,7 +173,7 @@
             }
             return true;
         }
-        build() {
+        build(onFinish) {
             if (!this.preprocessScript()) {
                 console.log(this.colorRed, 'node-inno config error!');
                 return false;
@@ -195,6 +195,9 @@
                 }
                 else {
                     console.log(this.colorRed, `× child process exited with code ${code} ×`);
+                }
+                if (onFinish && typeof onFinish == "function") {
+                    onFinish(code);
                 }
             });
         }

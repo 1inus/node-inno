@@ -213,7 +213,7 @@ export class NodeInno {
 	/**
 	 * 
 	 */
-	public build() {
+	public build(onFinish:any) {
 		if (!this.preprocessScript()) {
 			console.log(this.colorRed, 'node-inno config error!');
 			return false;
@@ -241,6 +241,10 @@ export class NodeInno {
 				console.log(this.colorGreen, `√ child process exited with code ${code} √`);
 			} else {
 				console.log(this.colorRed, `× child process exited with code ${code} ×`);
+			}
+
+			if(onFinish && typeof onFinish == "function"){
+				onFinish(code);
 			}
 		});
 	}

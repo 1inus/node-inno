@@ -6,7 +6,13 @@ var
 procedure killTaskBeforeInstall(hBtn:HWND);
 begin
 	KillTask('{#exeName}');
-	checkPreVersion();
+	if checkPreVersion() then begin
+		ClearImgList();
+		WizardForm.hide;
+		initInstallWindow;
+		WizardForm.show;
+		ImgApplyChanges(WizardForm.Handle);
+	end;
 	killTaskPabel.hide;
 end;
 

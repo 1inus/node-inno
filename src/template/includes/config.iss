@@ -71,4 +71,4 @@ Root: HKLM; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\Run"; ValueType:s
 Source: "inno-resource\*"; 	DestDir: {tmp}; Flags: dontcopy solidbreak;
 Source: "plugin\*.dll";  	DestDir: {app}; Flags: dontcopy solidbreak;
 
-Source: "{{app.package}}";  DestDir: {app}; Flags: recursesubdirs;
+Source: "{{app.package}}";  DestDir: {app}; Flags: ignoreversion recursesubdirs;

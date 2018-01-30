@@ -11,6 +11,16 @@
 		"defaultInstallDir": "{pf}",
 		"installerOutputDir": "C:/Users/cnlia/Desktop"
 	},
+	"app": {
+		"id": "TakeColor 1.0.0",
+		"name": "TakeColor",
+		"version": "",
+		"publisher": "htgk",
+		"mainPage": "",
+		"comments": "myapp_installer",
+		"exe": "build/app/TakeColor.exe",
+		"package": "build/app/*"
+	},
 	"registry": [
 		{
 			"root": "HKCR",
@@ -29,16 +39,6 @@
 			"flags": "CreateValueIfDoesntExist"
 		}
 	],
-	"app": {
-		"id": "TakeColor 1.0.0",
-		"name": "TakeColor",
-		"version": "",
-		"publisher": "htgk",
-		"mainPage": "",
-		"comments": "myapp_installer",
-		"exe": "build/app/TakeColor.exe",
-		"package": "build/app/*"
-	},
 	"ui": {
 		"encoding": "gbk",
 		"fontName": "Microsoft YaHei",

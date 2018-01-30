@@ -17,7 +17,8 @@ begin
 		Caption:='0%';
 		Font.Style := [fsBold];
 		Font.Color:=${{ui.progressText.color}};
-		Font.Size:= {{ui.progressText.height}}-8;
+		Font.Size:= {{ui.progressText.height}}-10;
+		Font.Name := fontName;
 		OnMouseDown := @WizardFormMouseDown;
 		Transparent:=true;
 		hide;

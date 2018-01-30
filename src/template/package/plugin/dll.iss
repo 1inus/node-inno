@@ -6,6 +6,12 @@ type
 	TAddingFinishCallbackProc = procedure(FrameCount: Integer);
   	TPlayFinishCallbackProc = procedure();
 
+//轮播
+function GetSystemMetrics(nIndex:Integer):Integer; external 'GetSystemMetrics@user32.dll stdcall';
+procedure InitializeSlideShow(Hwnd:Thandle; l,t,w,h:integer;Animate:boolean; Stretch:integer); external 'InitializeSlideShow@files:isslideshow.dll stdcall';
+procedure DeinitializeSlideShow; external 'DeinitializeSlideShow@files:isslideshow.dll stdcall';
+procedure ShowImage(ipath:PAnsiChar; Effect:integer); external 'ShowImage@files:isslideshow.dll stdcall';
+
 function IsModuleLoaded(modulename: String ): Boolean;
 external 'IsModuleLoaded@files:psvince.dll stdcall setuponly';
 

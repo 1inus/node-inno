@@ -106,6 +106,7 @@ begin
 		CancelButton.Width:=0;
 	end;
 	
+	//check runing task and preview version
 	if not checkRuningTask() then begin
 		if checkPreVersion() then begin
 			initInstallWindow;
