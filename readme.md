@@ -24,7 +24,6 @@ Create the build directory in the root directory.
 
 ```json
 {
-	"buildScript": "",
 	"installDetail": {
 		"createShortcut": true,
 		"startupOnFinish": true,
