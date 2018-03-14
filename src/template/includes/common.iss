@@ -10,12 +10,11 @@ var btnId:HWND;
 	mylabel:TLabel;
 	offsetY:Integer;
 begin
-	btnId :=BtnCreate(btnParent.Handle, posiLeft, posiTop, 16, 16, ExpandConstant('{tmp}\CheckBox.png'),1,true);
+	btnId :=BtnCreate(btnParent.Handle, posiLeft, posiTop, {{ui.checkboxSize}}, {{ui.checkboxSize}}, ExpandConstant('{tmp}\CheckBox.png'),1,true);
 	
 	mylabel := TLabel.Create(WizardForm);
 	with mylabel do begin
 		AutoSize:=true;
-		//
 		Transparent:=True;
 		Font.Size := 10;
 		Font.Name := fontName;
@@ -25,9 +24,9 @@ begin
 		OnClick := @_checkboxLabelClick; 
 	end;
 	//调整一下上下对齐
-	offsetY := Round((16-mylabel.height) div 2);
+	offsetY := Round(({{ui.checkboxSize}}-mylabel.height) div 2);
 
-	mylabel.SetBounds(posiLeft+20, posiTop+offsetY, labelWdith, 14);
+	mylabel.SetBounds(posiLeft+{{ui.checkboxSize}}+4, posiTop+offsetY, labelWdith, 14);
 	BtnSetChecked(btnId, isChecked);
 	
 	result := mylabel;
@@ -52,7 +51,6 @@ begin
 	if installStep = wpFinished then begin
 		WizardForm.NextButton.Click;
 	end else if installStep = wpWelcome then begin
-		FreeAllWebWnd;
 		WizardForm.Close;
 	end;
 end;

@@ -14,39 +14,32 @@
     let os = require('os');
     let iconv = require('iconv-lite');
     class NodeInno {
-        constructor() {
-            this.spawn = require('child_process').spawn;
-            this.exec = require('child_process').exec;
-            this.colorRed = '\x1b[41m%s\x1b[0m';
-            this.colorGreen = '\x1b[32m%s\x1b[0m';
-            this.colorYellow = '\x1B[33m%s\x1B[39m';
-        }
-        preprocessScript() {
-            let packPath = path.join(process.cwd(), "package.json");
-            let pakage;
-            try {
-                pakage = require(packPath);
+        static preprocessScript(config) {
+            let targetJson, defaultJsonString, pakage, defaultJson, nodeInnoBase = __dirname;
+            if (config) {
+                targetJson = config;
             }
-            catch (e) {
-                console.log(this.colorRed, `error: ${packPath} not found.`);
-                return false;
+            else {
+                let packPath = path.join(process.cwd(), "package.json");
+                try {
+                    pakage = require(packPath);
+                }
+                catch (e) {
+                    console.log(this.colorRed, `error: ${packPath} not found.`);
+                    return false;
+                }
+                let nodeInnoBase = __dirname;
+                let targetJsonPath = "build/build.json";
+                try {
+                    targetJson = fs.readJsonSync(path.join(process.cwd(), targetJsonPath), { throws: false });
+                }
+                catch (e) {
+                    console.log(this.colorRed, `error: ${path.join(process.cwd(), targetJsonPath)} not found.`);
+                    return false;
+                }
+                defaultJson = fs.readJsonSync(path.join(nodeInnoBase, "template/build.json"), { throws: false });
+                defaultJsonString = fs.readFileSync(path.join(nodeInnoBase, "template/build.json"));
             }
-            if (pakage["node-inno-build"] && typeof pakage["node-inno-build"] != "string") {
-                console.log(this.colorRed, `error: "node-inno-buildjson" must be an object`);
-                return false;
-            }
-            let nodeInnoBase = __dirname;
-            let targetJson, targetJsonPath = pakage["node-inno-build"] ? path.join(pakage["node-inno-build"], "build.json") : "build/build.json";
-            try {
-                console.log(targetJsonPath);
-                targetJson = fs.readJsonSync(path.join(process.cwd(), targetJsonPath), { throws: false });
-            }
-            catch (e) {
-                console.log(this.colorRed, `error: ${path.join(process.cwd(), targetJsonPath)} not found.`);
-                return false;
-            }
-            let defaultJson = fs.readJsonSync(path.join(nodeInnoBase, "template/build.json"), { throws: false });
-            let defaultJsonString = fs.readFileSync(path.join(nodeInnoBase, "template/build.json"));
             if (!targetJson) {
                 console.log(this.colorRed, 'cannot find file : ./build/build.json');
                 return false;
@@ -91,7 +84,7 @@
             else {
                 targetJson.installDetail.installerOutputDir = path.join(process.cwd(), targetJson.installDetail.installerOutputDir || `${pakage.name}-${pakage.version}`);
             }
-            targetJson.installDetail.defaultInstallDir = targetJson.installDetail.defaultInstallDir || `{pf}`;
+            targetJson.installDetail.defaultInstallDir = targetJson.installDetail.defaultInstallDir;
             if (!targetJson.app.exe) {
                 console.error(this.colorRed, `× "${targetJson.app.exe}" required`);
                 return false;
@@ -143,7 +136,6 @@
                         console.error(this.colorRed, `build script file "${targetJson.buildScript}" not found`);
                         return false;
                     }
-                    this.config = targetJson;
                     let customResource = path.join(process.cwd(), "build/inno-resource");
                     if (fs.existsSync(customResource)) {
                         try {
@@ -154,7 +146,7 @@
                             console.log(e);
                         }
                     }
-                    return true;
+                    return targetJson;
                 }
                 catch (e) {
                     console.error(this.colorRed, e);
@@ -173,13 +165,14 @@
             }
             return true;
         }
-        build(onFinish) {
-            if (!this.preprocessScript()) {
+        static build(config, onFinish) {
+            config = this.preprocessScript(config);
+            if (!config) {
                 console.log(this.colorRed, 'node-inno config error!');
                 return false;
             }
             let innoPath = path.join(__dirname, 'Inno_Setup_5/ISCC.exe');
-            let buildProcess = this.spawn(innoPath, [this.config.buildScript]);
+            let buildProcess = this.spawn(innoPath, [config.buildScript]);
             buildProcess.stdout.on('data', (data) => {
                 console.log(this.colorGreen, data);
             });
@@ -202,5 +195,10 @@
             });
         }
     }
+    NodeInno.spawn = require('child_process').spawn;
+    NodeInno.exec = require('child_process').exec;
+    NodeInno.colorRed = '\x1b[41m%s\x1b[0m';
+    NodeInno.colorGreen = '\x1b[32m%s\x1b[0m';
+    NodeInno.colorYellow = '\x1B[33m%s\x1B[39m';
     exports.NodeInno = NodeInno;
 });

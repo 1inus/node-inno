@@ -8,51 +8,76 @@
 		"installPath": "",
 		"checkUninstallBeforeInstall":true,
 		"requireUninstallBeforeInstall":false,
-		"defaultInstallDir": "{pf}",
+		"defaultInstallDir": "",
 		"installerOutputDir": "C:/Users/cnlia/Desktop"
 	},
 	"app": {
 		"id": "TakeColor 1.0.0",
 		"name": "TakeColor",
 		"version": "",
-		"publisher": "htgk",
+		"publisher": "maker",
 		"mainPage": "",
 		"comments": "myapp_installer",
 		"exe": "build/app/TakeColor.exe",
 		"package": "build/app/*"
 	},
-	"registry": [
-		{
-			"root": "HKCR",
-			"subkey": "workplusProtocol\\DefaultIcon",
-			"type": "string",
-			"name": "URL Qiaoker Protocol",
-			"value": "{app}\\WorkPlus.exe",
-			"flags": "CreateValueIfDoesntExist"
-		},
-		{
-			"root": "HKCR",
-			"subkey": "workplusProtocol\\shell\\open\\command",
-			"type": "string",
-			"name": "URL Qiaoker Protocol",
-			"value": "{app}\\WorkPlus.exe \"\"%1\"\"",
-			"flags": "CreateValueIfDoesntExist"
-		}
-	],
+	"registry": [{
+		"root": "HKCR",
+		"subkey": "test\\DefaultIcon",
+		"type": "string",
+		"name": "URL Qiaoker Protocol",
+		"value": "{app}\\test.exe",
+		"flags": "CreateValueIfDoesntExist"
+	}],
 	"ui": {
 		"encoding": "gbk",
 		"fontName": "Microsoft YaHei",
 		"clientWidth": 800,
 		"clientHeight": 500,
+		"checkboxSize":16,
 		"uninstallMsgbox": {
 			"text": "检测到已经安装xxxxx，安装前是否卸载HTML DOM confirm()",
 			"color":"000000",
-			"fontSize":16
+			"fontSize":16,
+			"width":520,
+			"height":430,
+
+			"textTop":249,
+			"textLeft":65,
+			"textWidth":400,
+			"textHeight":60,
+
+			"btnOkTop":318,
+			"btnOkLeft":275,
+			"btnOkWidth":160,
+			"btnOkHeight":60,
+
+			"btnCancelTop":318,
+			"btnCancelLeft":85,
+			"btnCancelWidth":160,
+			"btnCancelHeight":60
 		},
 		"checkTaskMsgbox": {
 			"text": "检测到xxx正在运行，是否结束任务",
 			"color":"000000",
-			"fontSize":16
+			"fontSize":16,
+			"width":520,
+			"height":430,
+
+			"textTop":249,
+			"textLeft":65,
+			"textWidth":400,
+			"textHeight":60,
+
+			"btnOkTop":318,
+			"btnOkLeft":275,
+			"btnOkWidth":160,
+			"btnOkHeight":60,
+
+			"btnCancelTop":318,
+			"btnCancelLeft":85,
+			"btnCancelWidth":160,
+			"btnCancelHeight":60
 		},
 		"htmlAdBar": {
 			"top": 0,

@@ -71,6 +71,7 @@ end;
 
 //使用这个事件函数启动时改变向导或向导页。你不能在它触发之后使用 InitializeSetup 事件函数，向导窗体不退出
 procedure InitializeWizard();
+var formRegion:LongWord;
 begin
 	PDir('GifCtrl.dll');
 
@@ -105,6 +106,9 @@ begin
 		BackButton.Width:=0;
 		CancelButton.Width:=0;
 	end;
+
+	//formRegion:=CreateRoundRectRgn(0, 0, 520, 430, 10, 10);
+	//SetWindowRgn(WizardForm.Handle, FormRegion, True);
 	
 	//check runing task and preview version
 	if not checkRuningTask() then begin
@@ -152,6 +156,15 @@ begin
 		setEnableCloseBtn(true);
 		hideProgressPanel;
 		showFinishedPanel;
+
+		//开机启动
+		//if BtnGetChecked(startupOnBootupBtn) = true then begin
+			//RegWriteStringValue(HKLM, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Run', '{#appName}', '{app}\{#appName}');
+		//end else if RegvalueExists(HKLM, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Run', '{#appName}') then begin
+			//RegDeleteKeyIncludingSubkeys(HKLM, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Run');
+		//end;
+
+		//立即启动
 		if BtnGetChecked(startupOnFinishBtn) = true then begin
 			Exec(ExpandConstant('{app}\{#exeName}'), '', '', SW_SHOW, ewNoWait, RCode);
 			WizardForm.NextButton.Click;
@@ -174,6 +187,7 @@ end;
 
 function InitializeUninstall(): Boolean;
 begin
-  Result := True;
-  //Result := AutoIssProc(ExpandConstant('*{app}*'), 'chs', false, true);
+	Result := true;
+	//IsModuleLoaded('{#exeName}');
+	//KillTask('{#exeName}');
 end;

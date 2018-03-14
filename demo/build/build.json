@@ -1,0 +1,64 @@
+{
+	"buildScript": "",
+	"installDetail": {
+		"createShortcut": true,
+		"startupOnFinish": true,
+		"startupOnBootstrap": true,
+		"agreeLicense": true,
+		"installPath": "",
+		"checkUninstallBeforeInstall":false,
+		"requireUninstallBeforeInstall":true,
+		"defaultInstallDir": "",
+		"installerOutputDir": "C:/Users/lw/Desktop"
+	},
+	"app": {
+		"id": "node-inno",
+		"name": "node-inno",
+		"version": "1.0.0",
+		"publisher": "1inus",
+		"url": "",
+		"comments": "workplus windows installer",
+		"exe": "build/app/TakeColor.exe",
+		"package": "build/app/*"
+	},
+	"registry": [
+		{
+			"root": "HKCR",
+			"subkey": "workplusProtocol\\DefaultIcon",
+			"type": "string",
+			"name": "URL Qiaoker Protocol",
+			"value": "{app}\\TakeColor.exe",
+			"flags": "CreateValueIfDoesntExist"
+		}
+	],
+	"ui": {
+		"encoding": "gbk",
+		"fontName": "宋体",
+		"clientWidth": 800,
+		"clientHeight": 500,
+		"uninstallMsgbox": {
+			"text": "检测到已经安装TakeColor，是否卸载后再安装",
+			"color":"000000",
+			"fontSize":14
+		},
+		"checkTaskMsgbox": {
+			"text": "检测到xxx正在运行，是否结束任务",
+			"color":"000000",
+			"fontSize":16
+		},
+		"simpleAdBar": {
+			"images": [
+				"bg_blue.png",
+				"bg_green.png",
+				"bg_purple.png"
+			],
+			"interval": 5000,
+			"top": 0,
+			"left": 0,
+			"width": 800,
+			"height": 350,
+			"timeInterval": 3000,
+			"show": true
+		}
+	}
+}

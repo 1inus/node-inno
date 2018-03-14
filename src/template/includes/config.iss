@@ -51,7 +51,7 @@ UsePreviousTasks		= yes
 UsePreviousUserInfo		= yes
 
 [Tasks]
-Name: "startupicon"; Description: "{#appName} startupOnBootstrap"; GroupDescription: "{cm:AdditionalIcons}";
+Name: "startupicon"; Description: "{#appName} startupOnBootstrap"; GroupDescription: "{cm:AdditionalIcons}"; 
 
 [Icons]
 Name: "{group}\{#appName}"; Filename: "{app}\{#exeName}"; WorkingDir: "{app}";
@@ -61,7 +61,7 @@ Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#appName}"; Filen
 Name: "{userdesktop}\{#appName}"; Filename: "{app}\{#exeName}"; Check: DesktopCheckClick;
 
 [Registry] 
-Root: HKLM; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\Run"; ValueType:string; ValueName:"{#appName}"; ValueData: "{app}\{#appName}"
+Root: HKLM; Subkey: "SOFTWARE\Microsoft\Windows\CurrentVersion\Run"; ValueType:string; ValueName:"{#appName}"; ValueData: "{app}\{#appName}"; Flags: deletevalue uninsdeletevalue noerror; Check: startUpCheck;
 
 {{each registry as val index}}
 {{if val.root}} Root: {{val.root}};{{/if}} {{if val.subkey}} Subkey: {{val.subkey}};{{/if}} {{if val.type}} ValueType: {{val.type}};{{/if}}{{if val.name}} ValueName: {{val.name}}; {{/if}}{{if val.value}} ValueData: "{{val.value}}"; {{/if}}{{if val.flags}} Flags: {{val.flags}}; {{/if}}

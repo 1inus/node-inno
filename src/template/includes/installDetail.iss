@@ -16,6 +16,14 @@ begin
 	end
 end;
 
+//check startUpCheck is exist
+Function startUpCheck(): Boolean;
+begin
+	if BtnGetChecked(startupOnBootupBtn) = true then begin
+		Result := true;
+	end
+end;
+
 //license check
 procedure licenseCheckCheckClick(hBtn:HWND);
 begin
@@ -80,6 +88,8 @@ begin
 	BtnSetEvent(installBtn, BtnClickEventID, WrapBtnCallback(@installBtnClick, 1));
 	BtnSetEnabled(installBtn, {{ui.licenseCheckbox.checked}});
 
+	//WizardForm.DirEdit.Text := '{{installDetail.defaultInstallDir}}';
+
 	//输入安装路径
 	if {{ui.installDirInput.show}} then begin
 		installPath := TNewEdit.Create(WizardForm);
@@ -92,11 +102,13 @@ begin
 			Font.Name := fontName;
 			Font.Color:=${{ui.installDirInput.color}};
 			BorderStyle := bsNone;
-			Text := WizardForm.DirEdit.Text;
+			Text := {{if installDetail.defaultInstallDir}} '{{installDetail.defaultInstallDir}}' {{/if}} {{if !installDetail.defaultInstallDir}} WizardForm.DirEdit.Text {{/if}};
 			OnChange := @inputInstallPath;
 			enabled:={{ui.installDirInput.enabled}};
 			//OnClick:=@browseInputClick;
 		end;
+
+		WizardForm.DirEdit.Text := installPath.Text;
 
 		inputOffsetY := Round(({{ui.installDirInput.height}} - installPath.Height) div 2);
 		installPath.top := {{ui.installDirInput.top}}+inputOffsetY;
@@ -138,7 +150,7 @@ begin
 		DesktopCheckLabel.Font.Color := ${{ui.createShortcutCheckbox.color}};
 	end;
 
-	//安装完成后 是否立即启动程序
+	//安装完成后 是否开机启动程序
 	if {{ui.startupOnBootstrapCheckbox.show}} then begin
 		startupOnBootupLabel:= createCheckBoxBtn({{ui.startupOnBootstrapCheckbox.left}}, {{ui.startupOnBootstrapCheckbox.top}}, WizardForm, '{{ui.startupOnBootstrapCheckbox.text}}', 100, {{ui.startupOnBootstrapCheckbox.checked}});
 		startupOnBootupBtn:= startupOnBootupLabel.Tag;
