@@ -1,5 +1,8 @@
 一个基于innosetup的 nodejs自动化打包工具，通过json配置，可灵活定制安装界面和安装流程，为nwjs、electron或者其他应用进行exe的打包。
 
+# screenshot
+![screenshot](https://raw.githubusercontent.com/1inus/node-inno/master/screenshot.png)
+
 # how to use
 
 ## create build directory
