@@ -3,6 +3,14 @@
 # screenshot
 ![screenshot](https://raw.githubusercontent.com/1inus/node-inno/master/screenshot.png)
 
+# npm
+
+[npm](https://www.npmjs.com/package/node-inno)
+
+```shell
+npm install node-inno
+```
+
 # how to use
 
 ## create build directory
