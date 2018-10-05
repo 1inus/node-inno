@@ -24,10 +24,10 @@ begin
 		AutoSize:=false;
 		Transparent:=true;
 		Parent:=WizardForm;
-		Left := {{ui.finishText.left}};
-		Top := {{ui.finishText.top}};
-		Width := {{ui.finishText.width}};
-		height := {{ui.finishText.height}};
+		Left := ScaleX({{ui.finishText.left}});
+		Top := ScaleY({{ui.finishText.top}});
+		Width := ScaleX({{ui.finishText.width}});
+		height := ScaleY({{ui.finishText.height}});
 		Caption:='{{ui.finishText.text}}';
 		Font.Name := fontName;
 		Font.Color:=${{ui.finishText.color}};

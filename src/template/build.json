@@ -12,9 +12,9 @@
 		"installerOutputDir": "C:/Users/cnlia/Desktop"
 	},
 	"app": {
-		"id": "TakeColor 1.0.0",
-		"name": "TakeColor",
-		"version": "",
+		"id": "node-inno 1.0.4",
+		"name": "node-inno",
+		"version": "1.0.4",
 		"publisher": "maker",
 		"mainPage": "",
 		"comments": "myapp_installer",
@@ -31,7 +31,7 @@
 	}],
 	"ui": {
 		"encoding": "gbk",
-		"fontName": "Microsoft YaHei",
+		"fontName": "微软雅黑",
 		"clientWidth": 800,
 		"clientHeight": 500,
 		"checkboxSize":16,
@@ -122,8 +122,8 @@
 			"text": "创建桌面快捷方式",
 			"top": 478,
 			"left": 465,
-			"checked": true,
-			"show": true,
+			"checked":true,
+			"show":true,
 			"color": "000000"
 		},
 		"startupOnFinishCheckbox": {

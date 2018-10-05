@@ -9,8 +9,8 @@ procedure initMainWindow();
 begin
 	//beautify window
 	with WizardForm do begin
-		ClientWidth:={{ui.clientWidth}};
-		ClientHeight:={{ui.clientHeight}};
+		ClientWidth:=ScaleX({{ui.clientWidth}});
+		ClientHeight:=ScaleY({{ui.clientHeight}});
 		Center;
 		OnMouseDown:=@WizardFormMouseDown;
 	end;
@@ -20,14 +20,14 @@ begin
 	ShowFairyEx(0);
 
 	//window background
-	mainBg:=ImgLoad(WizardForm.Handle, ExpandConstant('{tmp}\bg.png'), 0, 0, WizardForm.ClientWidth, WizardForm.ClientHeight, True, True);
+	mainBg:=ImgLoad(WizardForm.Handle, ExpandConstant('{tmp}\bg.png'), 0, 0, ScaleX(WizardForm.ClientWidth), ScaleY(WizardForm.ClientHeight), True, True);
 
 	//minimize btn
-	Minimize:=BtnCreate(WizardForm.Handle, {{ui.minimizeButton.left}}, {{ui.minimizeButton.top}}, {{ui.minimizeButton.width}}, {{ui.minimizeButton.height}}, ExpandConstant('{tmp}\minimizeBtn.png'), 3, False);
+	Minimize:=BtnCreate(WizardForm.Handle, ScaleX({{ui.minimizeButton.left}}), ScaleY({{ui.minimizeButton.top}}), ScaleX({{ui.minimizeButton.width}}), ScaleY({{ui.minimizeButton.height}}), ExpandConstant('{tmp}\minimizeBtn.png'), 3, False);
 	BtnSetEvent(Minimize, BtnClickEventID, WrapBtnCallback(@MinimizeOnClick, 1));
 	
 	//close btn
-	CloseBtn:=BtnCreate(WizardForm.Handle, {{ui.closeButton.left}}, {{ui.closeButton.top}}, {{ui.closeButton.width}}, {{ui.closeButton.height}}, ExpandConstant('{tmp}\closeBtn.png'), 3, False);
+	CloseBtn:=BtnCreate(WizardForm.Handle, ScaleX({{ui.closeButton.left}}), ScaleY({{ui.closeButton.top}}), ScaleX({{ui.closeButton.width}}), ScaleY({{ui.closeButton.height}}), ExpandConstant('{tmp}\closeBtn.png'), 3, False);
 	BtnSetEvent(CloseBtn, BtnClickEventID, WrapBtnCallback(@CloseBtnOnClick, 1));
 
 	ImgApplyChanges(WizardForm.Handle);

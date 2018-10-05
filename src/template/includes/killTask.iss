@@ -26,11 +26,11 @@ end;
 function checkRuningTask():Boolean;
 begin
 	Result := IsModuleLoaded('{#exeName}');
-    if Result then begin
+	if Result then begin
 		resultStr := RemoveQuotes(resultStr);
 		with WizardForm do begin
-			ClientWidth:={{ui.checkTaskMsgbox.width}};
-			ClientHeight:={{ui.checkTaskMsgbox.height}};
+			ClientWidth:=ScaleX({{ui.checkTaskMsgbox.width}});
+			ClientHeight:=ScaleY({{ui.checkTaskMsgbox.height}});
 			Center;
 			show;
 		end;
@@ -39,10 +39,10 @@ begin
 		killTaskPabel := TPanel.Create(WizardForm);
 		with killTaskPabel do begin
 			Parent := WizardForm;
-			Left := 0;
-			Top := 0;
-			Width := {{ui.checkTaskMsgbox.width}};
-			Height := {{ui.checkTaskMsgbox.height}};
+			Left := ScaleX(0);
+			Top := ScaleY(0);
+			Width := ScaleX({{ui.checkTaskMsgbox.width}});
+			Height := ScaleY({{ui.checkTaskMsgbox.height}});
 			color:=clWindow;
 			BorderStyle := bsNone;
 			ParentColor := false;
@@ -55,8 +55,8 @@ begin
 			Parent := killTaskPabel;
 			Left := ScaleX(0);
 			Top := ScaleY(0);
-			Width := {{ui.checkTaskMsgbox.width}};
-			Height := {{ui.checkTaskMsgbox.height}};
+			Width := ScaleX({{ui.checkTaskMsgbox.width}});
+			Height := ScaleY({{ui.checkTaskMsgbox.height}});
     		Bitmap.LoadFromFile(ExpandConstant('{tmp}\msgboxbg.bmp'));
 			OnMouseDown:=@WizardFormMouseDown;
 		end;
@@ -65,10 +65,10 @@ begin
 			//color:=clMenuText;
 			Parent := killTaskPabel;
 			AutoSize:=false;
-			Top := {{ui.checkTaskMsgbox.textTop}};
-			Left := {{ui.checkTaskMsgbox.textLeft}};
-			Width := {{ui.checkTaskMsgbox.textWidth}};
-			Height := {{ui.checkTaskMsgbox.textHeight}};
+			Top := ScaleY({{ui.checkTaskMsgbox.textTop}});
+			Left := ScaleX({{ui.checkTaskMsgbox.textLeft}});
+			Width := ScaleX({{ui.checkTaskMsgbox.textWidth}});
+			Height := ScaleY({{ui.checkTaskMsgbox.textHeight}});
 			wordWrap:=true;
 			Transparent:=True;
 			Caption := '{{ui.checkTaskMsgbox.text}}';
@@ -81,10 +81,10 @@ begin
 		AddImgToList(-20, -20, 255, clNone, ExpandConstant('{tmp}\msgbox.png'))
 		ShowFairyEx(0);
 
-		taskConfirmUninstallBtn := BtnCreate(killTaskPabel.Handle, {{ui.checkTaskMsgbox.btnOkLeft}}, {{ui.checkTaskMsgbox.btnOkTop}}, {{ui.checkTaskMsgbox.btnOkWidth}}, {{ui.checkTaskMsgbox.btnOkHeight}}, ExpandConstant('{tmp}\continueBtn.png'), 3, False);
+		taskConfirmUninstallBtn := BtnCreate(killTaskPabel.Handle, ScaleX({{ui.checkTaskMsgbox.btnOkLeft}}), ScaleY({{ui.checkTaskMsgbox.btnOkTop}}), ScaleX({{ui.checkTaskMsgbox.btnOkWidth}}), ScaleY({{ui.checkTaskMsgbox.btnOkHeight}}), ExpandConstant('{tmp}\continueBtn.png'), 3, False);
 		BtnSetEvent(taskConfirmUninstallBtn, BtnClickEventID, WrapBtnCallback(@killTaskBeforeInstall, 1));
 
-		taskCancelBtn := BtnCreate(killTaskPabel.Handle, {{ui.checkTaskMsgbox.btnCancelLeft}}, {{ui.checkTaskMsgbox.btnCancelTop}}, {{ui.checkTaskMsgbox.btnCancelWidth}}, {{ui.checkTaskMsgbox.btnCancelHeight}}, ExpandConstant('{tmp}\cancelBtn.png'), 3, False);
+		taskCancelBtn := BtnCreate(killTaskPabel.Handle, ScaleX({{ui.checkTaskMsgbox.btnCancelLeft}}), ScaleY({{ui.checkTaskMsgbox.btnCancelTop}}), ScaleX({{ui.checkTaskMsgbox.btnCancelWidth}}), ScaleY({{ui.checkTaskMsgbox.btnCancelHeight}}), ExpandConstant('{tmp}\cancelBtn.png'), 3, False);
 		BtnSetEvent(taskCancelBtn, BtnClickEventID, WrapBtnCallback(@cancelKillRunningTask, 1));
-    end;
+	end;
 end;

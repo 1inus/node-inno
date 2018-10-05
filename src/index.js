@@ -16,19 +16,20 @@
     class NodeInno {
         static preprocessScript(config) {
             let targetJson, defaultJsonString, pakage, defaultJson, nodeInnoBase = __dirname;
+            defaultJson = fs.readJsonSync(path.join(nodeInnoBase, "template/build.json"), { throws: false });
+            let packPath = path.join(process.cwd(), "package.json");
+            try {
+                pakage = require(packPath);
+            }
+            catch (e) {
+                console.log(this.colorRed, `error: ${packPath} not found.`);
+                return false;
+            }
             if (config) {
                 targetJson = config;
+                defaultJsonString = targetJson + "";
             }
             else {
-                let packPath = path.join(process.cwd(), "package.json");
-                try {
-                    pakage = require(packPath);
-                }
-                catch (e) {
-                    console.log(this.colorRed, `error: ${packPath} not found.`);
-                    return false;
-                }
-                let nodeInnoBase = __dirname;
                 let targetJsonPath = "build/build.json";
                 try {
                     targetJson = fs.readJsonSync(path.join(process.cwd(), targetJsonPath), { throws: false });

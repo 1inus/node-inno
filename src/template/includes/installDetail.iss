@@ -11,7 +11,7 @@ var
 //check desktop shortcut is exist
 Function DesktopCheckClick(): Boolean;
 begin
-	if BtnGetChecked(DesktopCheck) = true then begin
+	if (BtnGetChecked(DesktopCheck) = true) or ({{!ui.createShortcutCheckbox.show}} and {{ui.createShortcutCheckbox.checked}})  then begin
 		Result := true;
 	end
 end;
@@ -41,14 +41,12 @@ end;
 
 //change install dir
 procedure browseButtonClick(hBtn:HWND);
-var inputOffsetY:Integer;
 begin
 	WizardForm.DirBrowseButton.Click;
 	installPath.Text := WizardForm.DirEdit.Text;
 end;
 
 procedure browseInputClick(Sender: TObject);
-var inputOffsetY:Integer;
 begin
 	WizardForm.DirBrowseButton.Click;
 	installPath.Text := WizardForm.DirEdit.Text;
@@ -84,7 +82,7 @@ procedure initDetailPanel();
 var inputOffsetY:Integer;
 begin
 	//install button
-	installBtn:=BtnCreate(WizardForm.Handle, {{ui.installButton.left}}, {{ui.installButton.top}}, {{ui.installButton.width}}, {{ui.installButton.height}}, ExpandConstant('{tmp}\installBtn.png'), 3, False);
+	installBtn:=BtnCreate(WizardForm.Handle, ScaleX({{ui.installButton.left}}), ScaleY({{ui.installButton.top}}), ScaleX({{ui.installButton.width}}), ScaleY({{ui.installButton.height}}), ExpandConstant('{tmp}\installBtn.png'), 3, False);
 	BtnSetEvent(installBtn, BtnClickEventID, WrapBtnCallback(@installBtnClick, 1));
 	BtnSetEnabled(installBtn, {{ui.licenseCheckbox.checked}});
 
@@ -96,8 +94,8 @@ begin
 		with installPath do begin
 			AutoSize:=false;
 			Parent := WizardForm;
-			Left := {{ui.installDirInput.left}}+8;
-			Width := {{ui.installDirInput.width}}-16;
+			Left := ScaleX({{ui.installDirInput.left}}+8);
+			Width := ScaleX({{ui.installDirInput.width}}-16);
 			Font.Size := {{ui.installDirInput.fontSize}};
 			Font.Name := fontName;
 			Font.Color:=${{ui.installDirInput.color}};
@@ -111,11 +109,11 @@ begin
 		WizardForm.DirEdit.Text := installPath.Text;
 
 		inputOffsetY := Round(({{ui.installDirInput.height}} - installPath.Height) div 2);
-		installPath.top := {{ui.installDirInput.top}}+inputOffsetY;
+		installPath.top := ScaleX({{ui.installDirInput.top}}+inputOffsetY);
 
-		browerBtn:=BtnCreate(WizardForm.Handle, {{ui.installDirBrowserButton.left}}, {{ui.installDirBrowserButton.top}}, {{ui.installDirBrowserButton.width}}, {{ui.installDirBrowserButton.height}}, ExpandConstant('{tmp}\browserBtn.png'), 3, False);
+		browerBtn:=BtnCreate(WizardForm.Handle, ScaleX({{ui.installDirBrowserButton.left}}), ScaleY({{ui.installDirBrowserButton.top}}), ScaleX({{ui.installDirBrowserButton.width}}), ScaleY({{ui.installDirBrowserButton.height}}), ExpandConstant('{tmp}\browserBtn.png'), 3, False);
 		BtnSetEvent(browerBtn, BtnClickEventID, WrapBtnCallback(@browseButtonClick, 1));
-		inputBorder:=ImgLoad(WizardForm.Handle, ExpandConstant('{tmp}\inputBorder.png'), {{ui.installDirInput.left}}, {{ui.installDirInput.top}}, {{ui.installDirInput.width}}, {{ui.installDirInput.height}}, True, True);
+		inputBorder:=ImgLoad(WizardForm.Handle, ExpandConstant('{tmp}\inputBorder.png'), ScaleX({{ui.installDirInput.left}}), ScaleY({{ui.installDirInput.top}}), ScaleX({{ui.installDirInput.width}}), ScaleY({{ui.installDirInput.height}}), True, True);
 	end;
 	
 	// 是否显示用户协议
@@ -123,8 +121,8 @@ begin
 		licenseLabelFile := TLabel.Create(WizardForm);
 		with licenseLabelFile do begin
 			AutoSize:=true;
-			left:={{ui.licenseText.left}};
-			top:={{ui.licenseText.top}}-2;
+			left:=ScaleX({{ui.licenseText.left}});
+			top:=ScaleY({{ui.licenseText.top}}-2);
 			Cursor:= crHand;
 			Transparent:=True;
 			Font.Name := fontName;
@@ -136,7 +134,7 @@ begin
 			OnClick:=@ShowLicense;
 		end;
 		
-		licenseLabel:= createCheckBoxBtn({{ui.licenseCheckbox.left}}, {{ui.licenseCheckbox.top}}, WizardForm, '{{ui.licenseCheckbox.text}}', 100, {{ui.licenseCheckbox.checked}});
+		licenseLabel:= createCheckBoxBtn(ScaleX({{ui.licenseCheckbox.left}}), ScaleY({{ui.licenseCheckbox.top}}), WizardForm, '{{ui.licenseCheckbox.text}}', 100, {{ui.licenseCheckbox.checked}});
 		licenseCheck:= licenseLabel.Tag;
 		licenseLabel.Font.Color := ${{ui.licenseCheckbox.color}};
 		BtnSetEvent(licenseCheck, BtnClickEventID, WrapBtnCallback(@licenseCheckCheckClick, 1));
@@ -145,21 +143,21 @@ begin
 	
 	//快捷方式选框
 	if {{ui.createShortcutCheckbox.show}} then begin
-		DesktopCheckLabel:= createCheckBoxBtn({{ui.createShortcutCheckbox.left}}, {{ui.createShortcutCheckbox.top}}, WizardForm, '{{ui.createShortcutCheckbox.text}}', 100, {{ui.createShortcutCheckbox.checked}});
+		DesktopCheckLabel:= createCheckBoxBtn(ScaleX({{ui.createShortcutCheckbox.left}}), ScaleY({{ui.createShortcutCheckbox.top}}), WizardForm, '{{ui.createShortcutCheckbox.text}}', 100, {{ui.createShortcutCheckbox.checked}});
 		DesktopCheck:= DesktopCheckLabel.Tag;
 		DesktopCheckLabel.Font.Color := ${{ui.createShortcutCheckbox.color}};
 	end;
 
 	//安装完成后 是否开机启动程序
 	if {{ui.startupOnBootstrapCheckbox.show}} then begin
-		startupOnBootupLabel:= createCheckBoxBtn({{ui.startupOnBootstrapCheckbox.left}}, {{ui.startupOnBootstrapCheckbox.top}}, WizardForm, '{{ui.startupOnBootstrapCheckbox.text}}', 100, {{ui.startupOnBootstrapCheckbox.checked}});
+		startupOnBootupLabel:= createCheckBoxBtn(ScaleX({{ui.startupOnBootstrapCheckbox.left}}), ScaleY({{ui.startupOnBootstrapCheckbox.top}}), WizardForm, '{{ui.startupOnBootstrapCheckbox.text}}', 100, {{ui.startupOnBootstrapCheckbox.checked}});
 		startupOnBootupBtn:= startupOnBootupLabel.Tag;
 		startupOnBootupLabel.Font.Color := ${{ui.startupOnBootstrapCheckbox.color}};
 	end;
 
 	//安装完成后 是否立即启动程序
 	if {{ui.startupOnFinishCheckbox.show}} then begin
-		startupOnFinishLabel:= createCheckBoxBtn({{ui.startupOnFinishCheckbox.left}}, {{ui.startupOnFinishCheckbox.top}}, WizardForm, '{{ui.startupOnFinishCheckbox.text}}', 100, {{ui.startupOnFinishCheckbox.checked}});
+		startupOnFinishLabel:= createCheckBoxBtn(ScaleX({{ui.startupOnFinishCheckbox.left}}), ScaleY({{ui.startupOnFinishCheckbox.top}}), WizardForm, '{{ui.startupOnFinishCheckbox.text}}', 100, {{ui.startupOnFinishCheckbox.checked}});
 		startupOnFinishBtn:= startupOnFinishLabel.Tag;
 		startupOnFinishLabel.Font.Color := {{ui.startupOnFinishCheckbox.color}};
 	end;

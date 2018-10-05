@@ -10,10 +10,10 @@ begin
 		Alignment:=taCenter;
 		AutoSize:=false;
 		Parent:=WizardForm;
-		Left := {{ui.progressText.left}};
-		Top := {{ui.progressText.top}};
-		Width := {{ui.progressText.width}};
-		height := {{ui.progressText.height}};
+		Left := ScaleX({{ui.progressText.left}});
+		Top := ScaleY({{ui.progressText.top}});
+		Width := ScaleX({{ui.progressText.width}});
+		height := ScaleY({{ui.progressText.height}});
 		Caption:='0%';
 		Font.Style := [fsBold];
 		Font.Color:=${{ui.progressText.color}};
@@ -24,8 +24,8 @@ begin
 		hide;
 	end;
 	
-	progressBarBg:=ImgLoad(WizardForm.handle, ExpandConstant('{tmp}\progressBg.png'), {{ui.progressBar.left}},{{ui.progressBar.top}}, {{ui.progressBar.width}},	{{ui.progressBar.height}}, True, True);
-	progressBar:=ImgLoad(WizardForm.handle, ExpandConstant('{tmp}\progress.png'), {{ui.progressBar.left}}, {{ui.progressBar.top}}, 0, {{ui.progressBar.height}}, True, True);
+	progressBarBg:=ImgLoad(WizardForm.handle, ExpandConstant('{tmp}\progressBg.png'), ScaleX({{ui.progressBar.left}}), ScaleY({{ui.progressBar.top}}), ScaleX({{ui.progressBar.width}}), ScaleY({{ui.progressBar.height}}), True, True);
+	progressBar:=ImgLoad(WizardForm.handle, ExpandConstant('{tmp}\progress.png'), ScaleX({{ui.progressBar.left}}), ScaleY({{ui.progressBar.top}}), ScaleX(0), ScaleY({{ui.progressBar.height}}), True, True);
 	ImgSetVisibility(progressBarBg, false);
 	ImgSetVisibility(progressBar, false);
 end;
@@ -48,6 +48,6 @@ end;
 procedure setProgressWidth(progressWidth:Extended);
 begin
 	progressLabel.Caption:=IntToStr(Round(progressWidth))+'%';
-	ImgSetPosition(progressBar, {{ui.progressBar.left}}, {{ui.progressBar.top}}, Round({{ui.progressBar.width}}*progressWidth/100), {{ui.progressBar.height}});
-    ImgApplyChanges(WizardForm.Handle);
+	ImgSetPosition(progressBar, ScaleX({{ui.progressBar.left}}), ScaleY({{ui.progressBar.top}}), ScaleX(Round({{ui.progressBar.width}}*progressWidth/100)), ScaleY({{ui.progressBar.height}}));
+	ImgApplyChanges(WizardForm.Handle);
 end;

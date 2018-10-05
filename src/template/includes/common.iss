@@ -10,7 +10,7 @@ var btnId:HWND;
 	mylabel:TLabel;
 	offsetY:Integer;
 begin
-	btnId :=BtnCreate(btnParent.Handle, posiLeft, posiTop, {{ui.checkboxSize}}, {{ui.checkboxSize}}, ExpandConstant('{tmp}\CheckBox.png'),1,true);
+	btnId :=BtnCreate(btnParent.Handle, ScaleX(posiLeft), ScaleY(posiTop), ScaleX({{ui.checkboxSize}}), ScaleY({{ui.checkboxSize}}), ExpandConstant('{tmp}\CheckBox.png'),1,true);
 	
 	mylabel := TLabel.Create(WizardForm);
 	with mylabel do begin
@@ -26,7 +26,7 @@ begin
 	//调整一下上下对齐
 	offsetY := Round(({{ui.checkboxSize}}-mylabel.height) div 2);
 
-	mylabel.SetBounds(posiLeft+{{ui.checkboxSize}}+4, posiTop+offsetY, labelWdith, 14);
+	mylabel.SetBounds(ScaleX(posiLeft+{{ui.checkboxSize}}+4), ScaleY(posiTop+offsetY), ScaleX(labelWdith), ScaleY(14));
 	BtnSetChecked(btnId, isChecked);
 	
 	result := mylabel;
@@ -41,7 +41,7 @@ end;
 //自定义最小化按钮
 procedure MinimizeOnClick(hBtn:HWND);
 begin
-	SendMessage(WizardForm.Handle, WM_SYSCOMMAND,61472,0);
+	SendMessage(WizardForm.Handle, WM_SYSCOMMAND, 61472, 0);
 end;
 
 //自定义关闭按钮点击事件

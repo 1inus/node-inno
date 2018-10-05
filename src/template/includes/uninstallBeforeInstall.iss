@@ -48,8 +48,8 @@ begin
 			result := false;
 			resultStr := RemoveQuotes(resultStr);
 			with WizardForm do begin
-				ClientWidth:= {{ui.uninstallMsgbox.width}};
-				ClientHeight:= {{ui.uninstallMsgbox.height}};
+				ClientWidth:= ScaleX({{ui.uninstallMsgbox.width}});
+				ClientHeight:= ScaleY({{ui.uninstallMsgbox.height}});
 				Center;
 				show;
 			end;
@@ -58,10 +58,10 @@ begin
 			uninstallBeforeInstallPabel := TPanel.Create(WizardForm);
 			with uninstallBeforeInstallPabel do begin
 				Parent := WizardForm;
-				Left := 0;
-				Top := 0;
-				Width := {{ui.uninstallMsgbox.width}};
-				Height := {{ui.uninstallMsgbox.height}};
+				Left := ScaleX(0);
+				Top := ScaleY(0);
+				Width := ScaleX({{ui.uninstallMsgbox.width}});
+				Height := ScaleY({{ui.uninstallMsgbox.height}});
 				color:=clWindow;
 				BorderStyle := bsNone;
 				ParentColor := false;
@@ -74,8 +74,8 @@ begin
 				Parent := uninstallBeforeInstallPabel;
 				Left := ScaleX(0);
 				Top := ScaleY(0);
-				Width :=  {{ui.uninstallMsgbox.width}};
-				Height :=  {{ui.uninstallMsgbox.height}};
+				Width :=  ScaleX({{ui.uninstallMsgbox.width}});
+				Height :=  ScaleY({{ui.uninstallMsgbox.height}});
 				Bitmap.LoadFromFile(ExpandConstant('{tmp}\msgboxbg.bmp'));
 				OnMouseDown:=@WizardFormMouseDown;
 			end;
@@ -84,10 +84,10 @@ begin
 				//color:=clMenuText;
 				Parent := uninstallBeforeInstallPabel;
 				AutoSize:=false;
-				Left := {{ui.uninstallMsgbox.textLeft}};
-				Top := {{ui.uninstallMsgbox.textTop}};
-				Width := {{ui.uninstallMsgbox.textWidth}};
-				Height := {{ui.uninstallMsgbox.textHeight}};
+				Left := ScaleX({{ui.uninstallMsgbox.textLeft}});
+				Top := ScaleY({{ui.uninstallMsgbox.textTop}});
+				Width := ScaleX({{ui.uninstallMsgbox.textWidth}});
+				Height := ScaleY({{ui.uninstallMsgbox.textHeight}});
 				wordWrap:=true;
 				Transparent:=True;
 				Caption := '{{ui.uninstallMsgbox.text}}';
@@ -101,10 +101,10 @@ begin
 			AddImgToList(-20, -20, 255, clNone, ExpandConstant('{tmp}\msgbox.png'))
 			ShowFairyEx(0);
 
-			confirmUninstallBtn := BtnCreate(uninstallBeforeInstallPabel.Handle, {{ui.uninstallMsgbox.btnOkLeft}}, {{ui.uninstallMsgbox.btnOkTop}}, {{ui.uninstallMsgbox.btnOkWidth}}, {{ui.uninstallMsgbox.btnOkHeight}}, ExpandConstant('{tmp}\confirmUninstallBtn.png'), 3, False);
+			confirmUninstallBtn := BtnCreate(uninstallBeforeInstallPabel.Handle, ScaleX({{ui.uninstallMsgbox.btnOkLeft}}), ScaleY({{ui.uninstallMsgbox.btnOkTop}}), ScaleX({{ui.uninstallMsgbox.btnOkWidth}}), ScaleY({{ui.uninstallMsgbox.btnOkHeight}}), ExpandConstant('{tmp}\confirmUninstallBtn.png'), 3, False);
 			BtnSetEvent(confirmUninstallBtn, BtnClickEventID, WrapBtnCallback(@uninstallBeforeInstall, 1));
 
-			cancelBtn := BtnCreate(uninstallBeforeInstallPabel.Handle, {{ui.uninstallMsgbox.btnCancelLeft}}, {{ui.uninstallMsgbox.btnCancelTop}}, {{ui.uninstallMsgbox.btnCancelWidth}}, {{ui.uninstallMsgbox.btnCancelHeight}}, ExpandConstant('{tmp}\cancelBtn.png'), 3, False);
+			cancelBtn := BtnCreate(uninstallBeforeInstallPabel.Handle, ScaleX({{ui.uninstallMsgbox.btnCancelLeft}}), ScaleY({{ui.uninstallMsgbox.btnCancelTop}}), ScaleX({{ui.uninstallMsgbox.btnCancelWidth}}), ScaleY({{ui.uninstallMsgbox.btnCancelHeight}}), ExpandConstant('{tmp}\cancelBtn.png'), 3, False);
 			BtnSetEvent(cancelBtn, BtnClickEventID, WrapBtnCallback(@cancelUninstallBeforeInstall, 1));
 
 		end else begin

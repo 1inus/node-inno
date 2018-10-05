@@ -12,23 +12,6 @@ var
 const
 	adWdith = 10;
 
-procedure adTimerProc(h: Longword; msg: Longword; idevent: Longword; dwTime: Longword);
-begin
-	adOpacity := adOpacity+10;
-
-	if adOpacity > 255 then begin
-		preAdImageIndex := curAdImageIndex;
-		ImgSetTransparent(adImageGroup[preAdImageIndex], 0);
-		ImgSetTransparent(adImageGroup[curAdImageIndex], 255);
-		ImgApplyChanges(WizardForm.Handle);
-		KillTimer(0, adSwitchTimer);
-	end else begin
-		ImgSetTransparent(adImageGroup[preAdImageIndex], 255-adOpacity);
-		ImgSetTransparent(adImageGroup[curAdImageIndex], adOpacity);
-		ImgApplyChanges(WizardForm.Handle);
-	end;
-end;
-
 //switch ad image
 procedure adButtonGroupClick(hBtn:HWND);
 var
@@ -38,13 +21,10 @@ begin
 	BtnSetEnabled(preAdImageBtn, true);
 
 	//立即完成上一次的轮播，为下一次轮播初始化环境
-	KillTimer(0, adSwitchTimer);
 	ImgSetTransparent(adImageGroup[preAdImageIndex], 0);
 	ImgSetVisibility(adImageGroup[preAdImageIndex], false);
 	ImgSetTransparent(adImageGroup[curAdImageIndex], 255);
-
 	preAdImageBtn := hBtn;
-
 	for i:=0 to adImageNumber do begin
 		if adButtonGroup[i] = hBtn then begin
 			curAdImageIndex := i;
@@ -52,8 +32,10 @@ begin
 	end;
 	ImgSetVisibility(adImageGroup[curAdImageIndex], true);
 
-	adOpacity := 0;
-	adSwitchTimer:=SetTimer(0, 0, 1, WrapTimerProc(@adTimerProc,5));
+	preAdImageIndex := curAdImageIndex;
+	ImgSetTransparent(adImageGroup[preAdImageIndex], 0);
+	ImgSetTransparent(adImageGroup[curAdImageIndex], 255);
+	ImgApplyChanges(WizardForm.Handle);
 end;
 
 //自动轮播
@@ -84,12 +66,12 @@ begin
 		{{/each}}
 
 		//定位广告导航栏
-		dotsTop := {{ui.simpleAdBar.top}}+{{ui.simpleAdBar.height}}-40;
-		dotsLeft := {{ui.simpleAdBar.left}}+({{ui.simpleAdBar.width}} div 2) - ((30*adImageNumber) div 2);
+		dotsTop := ScaleY({{ui.simpleAdBar.top}}+{{ui.simpleAdBar.height}}-40);
+		dotsLeft := ScaleX({{ui.simpleAdBar.left}}+({{ui.simpleAdBar.width}} div 2) - ((30*adImageNumber) div 2));
 
 		{{each ui.simpleAdBar.images as image index}}
 		adImageGroup[{{index}}] := ImgLoad(WizardForm.Handle, ExpandConstant('{tmp}\{{image}}'),{{ui.simpleAdBar.left}},{{ui.simpleAdBar.top}},{{ui.simpleAdBar.width}},{{ui.simpleAdBar.height}},True,True);
-		adButtonGroup[{{index}}] := BtnCreate(WizardForm.Handle, dotsLeft+30*{{index}}, dotsTop, 30, 30, ExpandConstant('{tmp}\dots.png'), 3, false);
+		adButtonGroup[{{index}}] := BtnCreate(WizardForm.Handle, ScaleX(dotsLeft+30*{{index}}), ScaleY(dotsTop), ScaleX(30), ScaleY(30), ExpandConstant('{tmp}\dots.png'), 3, false);
 		BtnSetEvent(adButtonGroup[{{index}}], BtnClickEventID, WrapBtnCallback(@adButtonGroupClick, 1));
 		ImgSetTransparent(adImageGroup[{{index}}], 0);
 		{{/each}}
