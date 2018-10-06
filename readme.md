@@ -135,13 +135,6 @@ Create the build directory in the root directory.
 			"color": "FF8833",
 			"show": true
 		},
-		"moreOptions": {
-			"text": "更多安装选项",
-			"top": 12,
-			"left": 12,
-			"show": true,
-			"color": "000000"
-		},
 		"licenseCheckbox": {
 			"text": "已经阅读",
 			"top": 478,

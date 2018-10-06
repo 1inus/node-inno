@@ -7,7 +7,7 @@
 		"agreeLicense": true,
 		"installPath": "",
 		"checkUninstallBeforeInstall":true,
-		"requireUninstallBeforeInstall":false,
+		"requireUninstallBeforeInstall":true,
 		"defaultInstallDir": "",
 		"installerOutputDir": "C:/Users/cnlia/Desktop"
 	},
@@ -31,53 +31,53 @@
 	}],
 	"ui": {
 		"encoding": "gbk",
-		"fontName": "微软雅黑",
-		"clientWidth": 800,
-		"clientHeight": 500,
+		"fontName": "Microsoft YaHei",
+		"clientWidth": 600,
+		"clientHeight": 400,
 		"checkboxSize":16,
 		"uninstallMsgbox": {
-			"text": "检测到已经安装xxxxx，安装前是否卸载HTML DOM confirm()",
+			"text": "检测到已经安装 Makerbook，安装前需要卸载",
 			"color":"000000",
 			"fontSize":16,
-			"width":520,
-			"height":430,
+			"width":500,
+			"height":340,
 
-			"textTop":249,
-			"textLeft":65,
-			"textWidth":400,
-			"textHeight":60,
+			"textTop":130,
+			"textLeft":46,
+			"textWidth":398,
+			"textHeight":80,
 
-			"btnOkTop":318,
-			"btnOkLeft":275,
-			"btnOkWidth":160,
-			"btnOkHeight":60,
+			"btnOkTop":246,
+			"btnOkLeft":102,
+			"btnOkWidth":104,
+			"btnOkHeight":38,
 
-			"btnCancelTop":318,
-			"btnCancelLeft":85,
-			"btnCancelWidth":160,
-			"btnCancelHeight":60
+			"btnCancelTop":246,
+			"btnCancelLeft":294,
+			"btnCancelWidth":104,
+			"btnCancelHeight":38
 		},
 		"checkTaskMsgbox": {
-			"text": "检测到xxx正在运行，是否结束任务",
+			"text": "检测到 MakerBook 正在运行，安装前需要关闭软件",
 			"color":"000000",
 			"fontSize":16,
-			"width":520,
-			"height":430,
+			"width":500,
+			"height":340,
 
-			"textTop":249,
-			"textLeft":65,
-			"textWidth":400,
-			"textHeight":60,
+			"textTop":130,
+			"textLeft":46,
+			"textWidth":398,
+			"textHeight":80,
 
-			"btnOkTop":318,
-			"btnOkLeft":275,
-			"btnOkWidth":160,
-			"btnOkHeight":60,
+			"btnOkTop":246,
+			"btnOkLeft":102,
+			"btnOkWidth":104,
+			"btnOkHeight":38,
 
-			"btnCancelTop":318,
-			"btnCancelLeft":85,
-			"btnCancelWidth":160,
-			"btnCancelHeight":60
+			"btnCancelTop":246,
+			"btnCancelLeft":294,
+			"btnCancelWidth":104,
+			"btnCancelHeight":38
 		},
 		"htmlAdBar": {
 			"top": 0,
@@ -87,13 +87,17 @@
 			"show": false
 		},
 		"simpleAdBar": {
-			"images": [],
-			"interval": 5000,
+			"images": [
+				"bg_blue.png",
+				"bg_green.png",
+				"bg_purple.png"
+			],
+			"interval": 6000,
 			"top": 0,
 			"left": 0,
-			"width": 800,
-			"height": 350,
-			"timeInterval": 3000,
+			"width": 600,
+			"height": 250,
+			"timeInterval": 10,
 			"show": true
 		},
 		"licenseText": {
@@ -101,14 +105,7 @@
 			"top": 482,
 			"left": 172,
 			"color": "FF8833",
-			"show": true
-		},
-		"moreOptions": {
-			"text": "更多安装选项",
-			"top": 12,
-			"left": 12,
-			"show": true,
-			"color": "000000"
+			"show": false
 		},
 		"licenseCheckbox": {
 			"text": "已经阅读",
@@ -120,42 +117,42 @@
 		},
 		"createShortcutCheckbox": {
 			"text": "创建桌面快捷方式",
-			"top": 478,
-			"left": 465,
-			"checked":true,
-			"show":true,
+			"top": 371,
+			"left": 291,
+			"checked": true,
+			"show": true,
 			"color": "000000"
 		},
 		"startupOnFinishCheckbox": {
 			"text": "立即运行程序",
-			"top": 478,
-			"left": 352,
+			"top": 371,
+			"left": 158,
 			"checked": true,
 			"show": true,
 			"color": "000000"
 		},
 		"startupOnBootstrapCheckbox": {
 			"text": "开机启动",
-			"top": 478,
-			"left": 253,
-			"checked": true,
+			"top": 371,
+			"left": 59,
+			"checked": false,
 			"show": true,
 			"color": "000000"
 		},
 		"installDirInput": {
-			"top": 429,
-			"left": 154,
-			"height": 35,
+			"top": 320,
+			"left": 60,
+			"height": 36,
 			"width": 400,
 			"color": "000000",
 			"show": true,
-			"fontSize":14,
+			"fontSize":10,
 			"enabled":false
 		},
 		"installDirBrowserButton": {
-			"top": 429,
-			"left": 553,
-			"height": 35,
+			"top": 320,
+			"left": 459,
+			"height": 36,
 			"width": 80,
 			"show": true
 		},
@@ -164,53 +161,54 @@
 			"show": true
 		},
 		"progressBar": {
-			"top": 435,
-			"left": 50,
-			"width": 700,
-			"height": 20,
+			"top": 338,
+			"left": 41,
+			"width": 518,
+			"height": 17,
 			"show": true
 		},
 		"progressText": {
-			"top": 390,
+			"top": 290,
 			"left": 0,
-			"width": 800,
-			"height": 30,
+			"width": 600,
+			"height": 28,
 			"color": "E78E0E",
 			"show": true
 		},
 		"installButton": {
-			"top": 365,
-			"left": 274,
-			"width": 230,
-			"height": 50,
+			"top": 263,
+			"left": 218,
+			"width": 164,
+			"height": 44,
 			"show": true
 		},
 		"finishText": {
 			"text": "安装完毕",
-			"top": 385,
+			"top":280,
 			"left": 0,
-			"width": 800,
-			"height": 30,
-			"color": "20ad11",
+			"width": 600,
+			"height": 26,
+			"color": "E78E0E",
 			"show": true
 		},
+
 		"finishButton": {
-			"top": 428,
-			"left": 275,
-			"width": 250,
-			"height": 50,
+			"top": 324,
+			"left": 218,
+			"width": 164,
+			"height": 44,
 			"show": true
 		},
 		"minimizeButton": {
-			"top": 4,
-			"left": 755,
+			"top": 9,
+			"left": 551,
 			"width": 16,
 			"height": 16,
 			"show": true
 		},
 		"closeButton": {
-			"top": 4,
-			"left": 779,
+			"top": 9,
+			"left": 575,
 			"width": 16,
 			"height": 16,
 			"show": true

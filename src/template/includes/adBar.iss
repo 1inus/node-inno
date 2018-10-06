@@ -47,8 +47,16 @@ begin
 	end else begin
 		i := adButtonGroup[preAdImageIndex+1];
 	end;
-
 	adButtonGroupClick(i);
+end;
+
+//点击切换广告
+procedure adClickSwitch(hBtn:HWND);
+var i:HWND;
+begin
+	KillTimer(0, adAutoSwitchTimer);
+	adButtonGroupClick(hBtn);
+	adAutoSwitchTimer := SetTimer(0, 0, {{ui.simpleAdBar.interval}}, WrapTimerProc(@adAutoSwitch,5));
 end;
 
 //初始化广告栏
@@ -72,7 +80,7 @@ begin
 		{{each ui.simpleAdBar.images as image index}}
 		adImageGroup[{{index}}] := ImgLoad(WizardForm.Handle, ExpandConstant('{tmp}\{{image}}'),{{ui.simpleAdBar.left}},{{ui.simpleAdBar.top}},{{ui.simpleAdBar.width}},{{ui.simpleAdBar.height}},True,True);
 		adButtonGroup[{{index}}] := BtnCreate(WizardForm.Handle, ScaleX(dotsLeft+30*{{index}}), ScaleY(dotsTop), ScaleX(30), ScaleY(30), ExpandConstant('{tmp}\dots.png'), 3, false);
-		BtnSetEvent(adButtonGroup[{{index}}], BtnClickEventID, WrapBtnCallback(@adButtonGroupClick, 1));
+		BtnSetEvent(adButtonGroup[{{index}}], BtnClickEventID, WrapBtnCallback(@adClickSwitch, 1));
 		ImgSetTransparent(adImageGroup[{{index}}], 0);
 		{{/each}}
 
