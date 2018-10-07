@@ -12,6 +12,7 @@
 		"installerOutputDir": "C:/Users/cnlia/Desktop"
 	},
 	"app": {
+		"windowTitle":"setup your app",
 		"id": "node-inno 1.0.4",
 		"name": "node-inno",
 		"version": "1.0.4",

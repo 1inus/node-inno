@@ -19,7 +19,8 @@
 		"url": "",
 		"comments": "workplus windows installer",
 		"exe": "build/app/TakeColor.exe",
-		"package": "build/app/*"
+		"package": "build/app/*",
+		"windowTitle":"makerbook setup"
 	},
 	"registry": [
 		{

@@ -74,7 +74,7 @@ begin
 		{{/each}}
 
 		//定位广告导航栏
-		dotsTop := ScaleY({{ui.simpleAdBar.top}}+{{ui.simpleAdBar.height}}-40);
+		dotsTop := ScaleY({{ui.simpleAdBar.top}}+{{ui.simpleAdBar.height}}-32);
 		dotsLeft := ScaleX({{ui.simpleAdBar.left}}+({{ui.simpleAdBar.width}} div 2) - ((30*adImageNumber) div 2));
 
 		{{each ui.simpleAdBar.images as image index}}

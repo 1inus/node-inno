@@ -10,6 +10,10 @@
 
 #define fontName 				"{{ui.fontName}}"
 
+[Messages]
+SetupAppTitle = {{app.windowTitle}}
+SetupWindowTitle = {{app.windowTitle}}
+
 [Setup]
 AppName					= {#appName}
 AppVersion				= {#appVersion}
